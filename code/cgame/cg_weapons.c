@@ -1216,12 +1216,15 @@ const char *CG_GetMachinegunModel(gitem_t *item) {
 }
 
 sfxHandle_t CG_RegisterRailFireSound(void) {
+/*
 #define NUM_RG_SOUNDPACKS 4
 	int soundIdx = (((unsigned int)(cg_rgSound.integer - 1)) % NUM_RG_SOUNDPACKS) + 1;
 	if (cgs.ratFlags & RAT_FASTWEAPONS) {
 		return trap_S_RegisterSound( va("sound/weapons/railgun/railgf%ua-1250.wav", soundIdx), qfalse );
 	}
 	return trap_S_RegisterSound( va("sound/weapons/railgun/railgf%ua.wav", soundIdx), qfalse );
+*/
+	return trap_S_RegisterSound( "sound/weapons/railgun/railgf1a.wav", qfalse );
 }
 
 
@@ -1321,12 +1324,18 @@ void CG_RegisterWeapon( int weaponNum ) {
 
 	case WP_LIGHTNING:
 		MAKERGB( weaponInfo->flashDlightColor, 0.6f, 0.6f, 1.0f );
+		/*
 #define NUM_LG_SOUNDPACKS 3
 		soundIdx = (((unsigned int)(cg_lgSound.integer - 1)) % NUM_LG_SOUNDPACKS) + 1;
 		weaponInfo->readySound = trap_S_RegisterSound( va("sound/weapons/lightning/fsthum%u.wav", soundIdx), qfalse );
 		weaponInfo->firingSound = trap_S_RegisterSound( va("sound/weapons/lightning/lg_hum%u.wav", soundIdx), qfalse );
 
 		weaponInfo->flashSound[0] = trap_S_RegisterSound( va("sound/weapons/lightning/lg_fire%u.wav", soundIdx), qfalse );
+		*/
+		weaponInfo->readySound = trap_S_RegisterSound( "sound/weapons/melee/fsthum.wav", qfalse );
+		weaponInfo->firingSound = trap_S_RegisterSound( "sound/weapons/lightning/lg_hum.wav", qfalse );
+
+		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/lightning/lg_fire.wav", qfalse );
 		switch (cg_ratLg.integer) {
 			case 1:
 				cgs.media.lightningShader = trap_R_RegisterShader( "lightningBoltRat1");
@@ -1394,7 +1403,8 @@ void CG_RegisterWeapon( int weaponNum ) {
 
 	case WP_ROCKET_LAUNCHER:
 		if (cg_rocketStyle.integer > 0 && cg_rocketStyle.integer < 5) {
-			weaponInfo->missileModel = trap_R_RegisterModel( va("models/ammo/rocket/rocket%i/rocket.md3", cg_rocketStyle.integer) );
+			//weaponInfo->missileModel = trap_R_RegisterModel( va("models/ammo/rocket/rocket%i/rocket.md3", cg_rocketStyle.integer) );
+			weaponInfo->missileModel = trap_R_RegisterModel( "models/ammo/rocket/rocket.md3" );
 		} else {
 			weaponInfo->missileModel = trap_R_RegisterModel( "models/ammo/rocket/rocket.md3" );
 		}
