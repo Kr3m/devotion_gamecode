@@ -130,18 +130,22 @@ typedef enum {
 	//-- team games that uses bases go after this
 
 	GT_CTF,				// capture the flag	
+	/*
 	GT_1FCTF,
 	GT_OBELISK,
-	GT_HARVESTER,	
+	GT_HARVESTER,
+	*/
 	
 	//-- custom game types, there will be a variable in 
 	
 	GT_ELIMINATION,			// team elimination (custom)
 	GT_CTF_ELIMINATION,		// ctf elimination
 	GT_LMS,				// Last man standing
+	/*
 	GT_DOUBLE_D,			// Double Domination
 	GT_DOMINATION,			// Standard domination 12
-	GT_TREASURE_HUNTER,			
+	GT_TREASURE_HUNTER,
+	*/
 #ifdef WITH_MULTITOURNAMENT
 	GT_MULTITOURNAMENT,
 #endif
@@ -336,7 +340,7 @@ typedef enum {
 #define	EF_AWARD_GAUNTLET	0x00000040		// draw a gauntlet sprite
 #define	EF_NODRAW			0x00000080		// may have an event, but no model (unspawned items)
 #define	EF_FIRING			0x00000100		// for lightning gun
-#define	EF_KAMIKAZE			0x00000200
+// #define	EF_KAMIKAZE			0x00000200
 #define	EF_MOVER_STOP		0x00000400		// will push otherwise
 #define EF_AWARD_CAP		0x00000800		// draw the capture sprite
 #define	EF_TALK				0x00001000		// draw a talk balloon
@@ -349,6 +353,7 @@ typedef enum {
 #define EF_TEAMVOTED		0x00080000		// already cast a team vote
 
 // Additional awards (not visible to other players)
+/*
 typedef enum {
 	EAWARD_FRAGS,
 	EAWARD_ACCURACY,
@@ -383,6 +388,7 @@ typedef enum {
 
 	EAWARD_NUM_AWARDS
 } extAward_t;
+*/
 
 // NOTE: may not have more than 16
 typedef enum {
@@ -399,12 +405,13 @@ typedef enum {
 	PW_BLUEFLAG,
 	PW_NEUTRALFLAG,
 
+/*
 	PW_SCOUT,
 	PW_GUARD,
 	PW_DOUBLER,
 	PW_AMMOREGEN,
 	PW_INVULNERABILITY,
-
+*/
 	PW_NUM_POWERUPS
 
 } powerup_t;
@@ -414,10 +421,11 @@ typedef enum {
 
 	HI_TELEPORTER,
 	HI_MEDKIT,
+/*	
 	HI_KAMIKAZE,
 	HI_PORTAL,
 	HI_INVULNERABILITY,
-
+*/
 	HI_NUM_HOLDABLE
 } holdable_t;
 
@@ -453,19 +461,21 @@ typedef enum {
 	WP_RAILGUN,
 	WP_PLASMAGUN,
 	WP_BFG,
-	WP_GRAPPLING_HOOK,
-	WP_NAILGUN,
-	WP_PROX_LAUNCHER,
-	WP_CHAINGUN,
+//	WP_GRAPPLING_HOOK,
+//	WP_NAILGUN,
+//	WP_PROX_LAUNCHER,
+//	WP_CHAINGUN,
 
 	WP_NUM_WEAPONS
 } weapon_t;
 
+/*
 typedef enum {
 	HARVESTER_NONE,
 	HARVESTER_BLUECUBE,
 	HARVESTER_REDCUBE
 } harvester_t;
+*/
 
 typedef enum {
 	LOCPING_PING,
@@ -592,14 +602,14 @@ typedef enum {
 	EV_GIB_PLAYER,			// gib a previously living player
 	EV_SCOREPLUM,			// score plum
 
-	EV_PROXIMITY_MINE_STICK,
-	EV_PROXIMITY_MINE_TRIGGER,
-	EV_KAMIKAZE,			// kamikaze explodes
-	EV_OBELISKEXPLODE,		// obelisk explodes
-	EV_OBELISKPAIN,			// obelisk is in pain
-	EV_INVUL_IMPACT,		// invulnerability sphere impact
-	EV_JUICED,				// invulnerability juiced effect
-	EV_LIGHTNINGBOLT,		// lightning bolt bounced of invulnerability sphere
+	//EV_PROXIMITY_MINE_STICK,
+	//EV_PROXIMITY_MINE_TRIGGER,
+	//EV_KAMIKAZE,			// kamikaze explodes
+	//EV_OBELISKEXPLODE,		// obelisk explodes
+	//EV_OBELISKPAIN,			// obelisk is in pain
+	//EV_INVUL_IMPACT,		// invulnerability sphere impact
+	//EV_JUICED,				// invulnerability juiced effect
+	//EV_LIGHTNINGBOLT,		// lightning bolt bounced of invulnerability sphere
 
 	EV_DEBUG_LINE,
 	EV_STOPLOOPINGSOUND,
@@ -628,14 +638,14 @@ typedef enum {
 	GTS_BLUE_RETURN,
 	GTS_RED_TAKEN,
 	GTS_BLUE_TAKEN,
-	GTS_REDOBELISK_ATTACKED,
-	GTS_BLUEOBELISK_ATTACKED,
+	// GTS_REDOBELISK_ATTACKED,
+	// GTS_BLUEOBELISK_ATTACKED,
 	GTS_REDTEAM_SCORED,
 	GTS_BLUETEAM_SCORED,
 	GTS_REDTEAM_TOOK_LEAD,
 	GTS_BLUETEAM_TOOK_LEAD,
 	GTS_TEAMS_ARE_TIED,
-	GTS_KAMIKAZE,
+	// GTS_KAMIKAZE,
 	GTS_RED_DROPPED,
 	GTS_BLUE_DROPPED,
 	GTS_NEUTRAL_DROPPED,
@@ -747,6 +757,7 @@ typedef enum {
 #define TEAM_MAXOVERLAY		32
 
 //team task
+/*
 typedef enum {
 	TEAMTASK_NONE,
 	TEAMTASK_OFFENSE, 
@@ -757,7 +768,7 @@ typedef enum {
 	TEAMTASK_ESCORT,
 	TEAMTASK_CAMP
 } teamtask_t;
-
+*/
 // means of death
 typedef enum {
 	MOD_UNKNOWN,
@@ -783,12 +794,12 @@ typedef enum {
 	MOD_SUICIDE,
 	MOD_TARGET_LASER,
 	MOD_TRIGGER_HURT,
-	MOD_NAIL,
+	/*MOD_NAIL,
 	MOD_CHAINGUN,
 	MOD_PROXIMITY_MINE,
 	MOD_KAMIKAZE,
 	MOD_JUICED,
-	MOD_GRAPPLE
+	MOD_GRAPPLE*/
 } meansOfDeath_t;
 
 
@@ -961,7 +972,7 @@ typedef enum {
 	ET_PUSH_TRIGGER,
 	ET_TELEPORT_TRIGGER,
 	ET_INVISIBLE,
-	ET_GRAPPLE,				// grapple hooked on wall
+	// ET_GRAPPLE,				// grapple hooked on wall
 	ET_TEAM,
 
 	ET_EVENTS				// any of the EV_* events can be added freestanding

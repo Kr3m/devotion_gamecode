@@ -129,6 +129,7 @@ void G_JSONExportPlayer(fileHandle_t f, gclient_t *cl) {
 	xfprintf(f, "}");
 
 	xfprintf(f, ",");
+	/*
 	xfprintf(f, "\"awards\":{");
 	comma = qfalse;
 	G_JSONExportAward(f, "impressive", cl->ps.persistant[PERS_IMPRESSIVE_COUNT], &comma);
@@ -168,6 +169,7 @@ void G_JSONExportPlayer(fileHandle_t f, gclient_t *cl) {
 	G_JSONExportAward(f, "rat", cl->pers.awardCounts[EAWARD_RAT], &comma);
 	G_JSONExportAward(f, "thawbuddy", cl->pers.awardCounts[EAWARD_THAWBUDDY], &comma);
 	xfprintf(f, "}");
+	*/
 
 	xfprintf(f, ",");
 	xfprintf(f, "\"items\":{");

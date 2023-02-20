@@ -248,6 +248,7 @@ void CG_FragmentBounceMark( localEntity_t *le, trace_t *trace ) {
 CG_FragmentBounceSound
 ================
 */
+
 void CG_FragmentBounceSound( localEntity_t *le, trace_t *trace ) {
 	if ( le->leBounceSoundType == LEBS_BLOOD ) {
 		// half the gibs will make splat sounds
@@ -265,6 +266,7 @@ void CG_FragmentBounceSound( localEntity_t *le, trace_t *trace ) {
 			trap_S_StartSound( trace->endpos, ENTITYNUM_WORLD, CHAN_AUTO, s );
 		}
 	} else if ( le->leBounceSoundType == LEBS_BRASS ) {
+		/*
 		if ( cg_leiBrassNoise.integer ) {
 		// half the casings will make  casing sounds
 		if ( rand() & 1 ) {
@@ -300,7 +302,7 @@ void CG_FragmentBounceSound( localEntity_t *le, trace_t *trace ) {
 			}
 			trap_S_StartSound( trace->endpos, ENTITYNUM_WORLD, CHAN_AUTO, s );
 		}
-		}
+		}*/
 
 	}
 
@@ -309,7 +311,7 @@ void CG_FragmentBounceSound( localEntity_t *le, trace_t *trace ) {
 	le->leBounceSoundType = LEBS_NONE;
 }
 
-
+/*
 // LEILEI 
 void CG_GoreMark( localEntity_t *le, trace_t *trace ) {
 	int			radius;
@@ -325,12 +327,13 @@ void CG_GoreMark( localEntity_t *le, trace_t *trace ) {
 	le->leMarkType = LEMT_NONE;
 }
 
-
+*/
 /*
 ================
 CG_SplatSound LEILEI
 ================
 */
+/*
 void CG_SplatSound( localEntity_t *le, trace_t *trace ) {
 	if ( le->leBounceSoundType == LEBS_BLOOD ) {
 		// half the splats will make splat sounds
@@ -357,7 +360,7 @@ void CG_SplatSound( localEntity_t *le, trace_t *trace ) {
 	// or it gets too noisy as they settle
 	le->leBounceSoundType = LEBS_NONE;
 }
-
+*/
 
 
 /*
@@ -471,7 +474,7 @@ void CG_AddFragment( localEntity_t *le ) {
 }
 
 // LEILEI
-
+/*
 void CG_JustSplat( localEntity_t *le, trace_t *trace ) {
 	vec3_t	velocity;
 	float	dot;
@@ -554,7 +557,7 @@ void CG_AddGore( localEntity_t *le ) {
 
 	trap_R_AddRefEntityToScene( &le->refEntity );
 }
-
+*/
 /*
 =====================================================================
 
@@ -805,11 +808,11 @@ static void CG_AddFallScaleFade( localEntity_t *le ) {
 	len = VectorLength( delta );
 	
 	// LEILEI
-if (!cg_leiEnhancement.integer) {
-	if ( len < le->radius ) {
-		CG_FreeLocalEntity( le );
-		return;
-	}
+	if (!cg_leiEnhancement.integer) {
+		if ( len < le->radius ) {
+			CG_FreeLocalEntity( le );
+			return;
+		}
 	}
 	trap_R_AddRefEntityToScene( re );
 }
@@ -892,6 +895,7 @@ static void CG_AddSpriteExplosion( localEntity_t *le ) {
 CG_AddKamikaze
 ====================
 */
+/*
 void CG_AddKamikaze( localEntity_t *le ) {
 	refEntity_t	*re;
 	refEntity_t shockwave;
@@ -909,7 +913,7 @@ void CG_AddKamikaze( localEntity_t *le ) {
 
 		if (!(le->leFlags & LEF_SOUND1)) {
 //			trap_S_StartSound (re->origin, ENTITYNUM_WORLD, CHAN_AUTO, cgs.media.kamikazeExplodeSound );
-			trap_S_StartLocalSound(cgs.media.kamikazeExplodeSound, CHAN_AUTO);
+			//trap_S_StartLocalSound(cgs.media.kamikazeExplodeSound, CHAN_AUTO);
 			le->leFlags |= LEF_SOUND1;
 		}
 		// 1st kamikaze shockwave
@@ -1014,21 +1018,24 @@ void CG_AddKamikaze( localEntity_t *le ) {
 		trap_R_AddRefEntityToScene( &shockwave );
 	}
 }
+*/
 
 /*
 ===================
 CG_AddInvulnerabilityImpact
 ===================
 */
+/*
 void CG_AddInvulnerabilityImpact( localEntity_t *le ) {
 	trap_R_AddRefEntityToScene( &le->refEntity );
 }
-
+*/
 /*
 ===================
 CG_AddInvulnerabilityJuiced
 ===================
 */
+/*
 void CG_AddInvulnerabilityJuiced( localEntity_t *le ) {
 	int t;
 
@@ -1046,7 +1053,7 @@ void CG_AddInvulnerabilityJuiced( localEntity_t *le ) {
 		trap_R_AddRefEntityToScene( &le->refEntity );
 	}
 }
-
+*/
 /*
 ===================
 CG_AddRefEntity
@@ -1308,7 +1315,7 @@ void CG_AddLocalEntities( void ) {
 		case LE_SCOREPLUM:
 			CG_AddScorePlum( le );
 			break;
-
+/*
 //#ifdef MISSIONPACK
 		case LE_KAMIKAZE:
 			CG_AddKamikaze( le );
@@ -1319,14 +1326,16 @@ void CG_AddLocalEntities( void ) {
 		case LE_INVULJUICED:
 			CG_AddInvulnerabilityJuiced( le );
 			break;
+*/
 		case LE_SHOWREFENTITY:
 			CG_AddRefEntity( le );
 			break;
 //#endif
-
+		/*
 		case LE_GORE:			// blood
 			CG_AddGore( le );
 			break;
+		*/
 		}
 	}
 }

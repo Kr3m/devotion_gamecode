@@ -113,10 +113,11 @@ qboolean CheckGauntletAttack( gentity_t *ent ) {
 	} else {
 		s_quadFactor = 1;
 	}
+	/*
 	if( ent->client->persistantPowerup && ent->client->persistantPowerup->item && ent->client->persistantPowerup->item->giTag == PW_DOUBLER ) {
 		s_quadFactor *= 2;
 	}
-
+	*/
 	if(g_instantgib.integer)
 		damage = 500; //High damage in instant gib (normally enough to gib)
 	else
@@ -287,19 +288,23 @@ void Bullet_Fire (gentity_t *ent, float spread, int damage ) {
 
 		if ( traceEnt->takedamage) {
 			if ( traceEnt->client && traceEnt->client->invulnerabilityTime > level.time ) {
+				/*
 				if (G_InvulnerabilityEffect( traceEnt, forward, tr.endpos, impactpoint, bouncedir )) {
 					G_BounceProjectile( muzzle, impactpoint, bouncedir, end );
 					VectorCopy( impactpoint, muzzle );
 					// the player can hit him/herself with the bounced rail
 					passent = ENTITYNUM_NONE;
 				}
-				else {
+				else
+				*/
+				{
 					VectorCopy( tr.endpos, muzzle );
 					passent = traceEnt->s.number;
 				}
 				continue;
 			}
 			else {
+			/*
                             if(spread == CHAINGUN_SPREAD)
                             {
                                 G_Damage( traceEnt, ent, ent, forward, tr.endpos,
@@ -308,7 +313,7 @@ void Bullet_Fire (gentity_t *ent, float spread, int damage ) {
 					ent->client->accuracy[WP_CHAINGUN][1]++;
 				}
                             }
-                            else
+                            else*/
                             {
 				G_Damage( traceEnt, ent, ent, forward, tr.endpos,
 					damage, 0, MOD_MACHINEGUN);
@@ -423,13 +428,16 @@ qboolean ShotgunPellet( vec3_t start, vec3_t end, gentity_t *ent, struct hitShot
 		if ( traceEnt->takedamage) {
 			damage = (g_newShotgun.integer ? NEW_SHOTGUN_DAMAGE : DEFAULT_SHOTGUN_DAMAGE) * s_quadFactor;
 			if ( traceEnt->client && traceEnt->client->invulnerabilityTime > level.time ) {
+				/*
 				if (G_InvulnerabilityEffect( traceEnt, forward, tr.endpos, impactpoint, bouncedir )) {
 					G_BounceProjectile( tr_start, impactpoint, bouncedir, tr_end );
 					VectorCopy( impactpoint, tr_start );
 					// the player can hit him/herself with the bounced rail
 					passent = ENTITYNUM_NONE;
 				}
-				else {
+				else
+				*/
+				{
 					VectorCopy( tr.endpos, tr_start );
 					passent = traceEnt->s.number;
 				}
@@ -538,7 +546,7 @@ void ShotgunPattern( vec3_t origin, vec3_t origin2, int seed, gentity_t *ent ) {
 		// make sure we don't get the EAWARD_ACCURACY if we didn't hit all pellets
 		ent->client->consecutive_hits = 0;
 	} else {
-		AwardMessage(ent, EAWARD_FULLSG, ++(ent->client->pers.awardCounts[EAWARD_FULLSG]));
+		// AwardMessage(ent, EAWARD_FULLSG, ++(ent->client->pers.awardCounts[EAWARD_FULLSG]));
 	}
 
 	ShotgunDamagePlums(&hitTargets, ent);
@@ -689,6 +697,7 @@ void weapon_railgun_fire (gentity_t *ent) {
 		traceEnt = &g_entities[ trace.entityNum ];
 		if ( traceEnt->takedamage ) {
 			if ( traceEnt->client && traceEnt->client->invulnerabilityTime > level.time ) {
+				/*
 				if ( G_InvulnerabilityEffect( traceEnt, forward, trace.endpos, impactpoint, bouncedir ) ) {
 					G_BounceProjectile( muzzle, impactpoint, bouncedir, end );
 					// snap the endpos to integers to save net bandwidth, but nudged towards the line
@@ -707,6 +716,7 @@ void weapon_railgun_fire (gentity_t *ent) {
 					// the player can hit him/herself with the bounced rail
 					passent = ENTITYNUM_NONE;
 				}
+				*/
 			}
 			else {
 				if( LogAccuracyHit( traceEnt, ent ) ) {
@@ -793,7 +803,7 @@ GRAPPLING HOOK
 
 ======================================================================
 */
-
+/*
 void Weapon_GrapplingHook_Fire (gentity_t *ent)
 {
 	if (!ent->client->fireHeld && !ent->client->hook)
@@ -827,7 +837,7 @@ void Weapon_HookThink (gentity_t *ent)
 
 	VectorCopy( ent->r.currentOrigin, ent->parent->client->ps.grapplePoint);
 }
-
+*/
 /*
 ======================================================================
 
@@ -863,6 +873,7 @@ void Weapon_LightningFire( gentity_t *ent ) {
 //unlagged - backward reconciliation #2
 
 		// if not the first trace (the lightning bounced of an invulnerability sphere)
+		/*
 		if (i) {
 			// add bounced off lightning bolt temp entity
 			// the first lightning bolt is a cgame only visual
@@ -872,6 +883,7 @@ void Weapon_LightningFire( gentity_t *ent ) {
 			SnapVector( end );
 			VectorCopy( end, tent->s.origin2 );
 		}
+		*/
 		if ( tr.entityNum == ENTITYNUM_NONE ) {
 			return;
 		}
@@ -880,6 +892,7 @@ void Weapon_LightningFire( gentity_t *ent ) {
 
 		if ( traceEnt->takedamage) {
 			if ( traceEnt->client && traceEnt->client->invulnerabilityTime > level.time ) {
+				/*
 				if (G_InvulnerabilityEffect( traceEnt, forward, tr.endpos, impactpoint, bouncedir )) {
 					G_BounceProjectile( muzzle, impactpoint, bouncedir, end );
 					VectorCopy( impactpoint, muzzle );
@@ -888,7 +901,9 @@ void Weapon_LightningFire( gentity_t *ent ) {
 					// the player can hit him/herself with the bounced lightning
 					passent = ENTITYNUM_NONE;
 				}
-				else {
+				else
+				*/
+				{
 					VectorCopy( tr.endpos, muzzle );
 					passent = traceEnt->s.number;
 				}
@@ -928,7 +943,7 @@ NAILGUN
 
 ======================================================================
 */
-
+/*
 void Weapon_Nailgun_Fire (gentity_t *ent) {
 	gentity_t	*m;
 	int			count;
@@ -951,7 +966,7 @@ void Weapon_Nailgun_Fire (gentity_t *ent) {
 
 //	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
 }
-
+*/
 
 /*
 ======================================================================
@@ -960,7 +975,7 @@ PROXIMITY MINE LAUNCHER
 
 ======================================================================
 */
-
+/*
 void weapon_proxlauncher_fire (gentity_t *ent) {
 	gentity_t	*m;
 
@@ -976,7 +991,7 @@ void weapon_proxlauncher_fire (gentity_t *ent) {
 
 //	VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );	// "real" physics
 }
-
+*/
 
 //======================================================================
 
@@ -1016,10 +1031,10 @@ void G_CheckAccuracyAward( gentity_t *ent, int old_accuracy_hits) {
 			requiredhits = 10;
 			ent->client->consecutive_hits++;
 			break;
-		case WP_CHAINGUN:
+/*		case WP_CHAINGUN:
 			requiredhits = 20;
 			ent->client->consecutive_hits++;
-			break;
+			break;*/
 		case WP_SHOTGUN:
 			// shotcun hits are already counted in ShotgunPattern()
 			break;
@@ -1030,7 +1045,7 @@ void G_CheckAccuracyAward( gentity_t *ent, int old_accuracy_hits) {
 	if (ent->client->consecutive_hits >= requiredhits) {
 		ent->client->consecutive_hits = 0;
 		// all hits, give an award
-		AwardMessage(ent, EAWARD_ACCURACY, ++(ent->client->pers.awardCounts[EAWARD_ACCURACY]));
+		// AwardMessage(ent, EAWARD_ACCURACY, ++(ent->client->pers.awardCounts[EAWARD_ACCURACY]));
 	}
 }
 
@@ -1089,10 +1104,11 @@ void FireWeapon( gentity_t *ent ) {
 	} else {
 		s_quadFactor = 1;
 	}
+	/*
 	if( ent->client->persistantPowerup && ent->client->persistantPowerup->item && ent->client->persistantPowerup->item->giTag == PW_DOUBLER ) {
 		s_quadFactor *= 2;
 	}
-
+	*/
         if (ent->client->spawnprotected)
             ent->client->spawnprotected = qfalse;
 
@@ -1104,12 +1120,14 @@ void FireWeapon( gentity_t *ent ) {
 	old_accuracy_hits = ent->client->accuracy_hits;
 
 	// track shots taken for accuracy tracking.  Grapple is not a weapon and gauntet is just not tracked
-	if( ent->s.weapon != WP_GRAPPLING_HOOK && ent->s.weapon != WP_GAUNTLET ) {
+	// if( ent->s.weapon != WP_GRAPPLING_HOOK && ent->s.weapon != WP_GAUNTLET ) {
+	if( ent->s.weapon != WP_GAUNTLET ) {
+		/*
 		if( ent->s.weapon == WP_NAILGUN ) {
 			ent->client->accuracy_shots += NUM_NAILSHOTS;
                         //ent->client->accuracy[WP_NAILGUN][0]++;
                         ent->client->accuracy[WP_NAILGUN][0] += NUM_NAILSHOTS;
-		} else {
+		} else */ {
 			ent->client->accuracy_shots++;
                         ent->client->accuracy[ent->s.weapon][0]++;
 		}
@@ -1154,6 +1172,7 @@ void FireWeapon( gentity_t *ent ) {
 	case WP_BFG:
 		BFG_Fire( ent );
 		break;
+		/*
 	case WP_GRAPPLING_HOOK:
 		Weapon_GrapplingHook_Fire( ent );
 		break;
@@ -1166,6 +1185,7 @@ void FireWeapon( gentity_t *ent ) {
 	case WP_CHAINGUN:
 		Bullet_Fire( ent, CHAINGUN_SPREAD, MACHINEGUN_DAMAGE );
 		break;
+		*/
 	default:
 // FIXME		G_Error( "Bad ent->s.weapon" );
 		break;
@@ -1180,6 +1200,7 @@ void FireWeapon( gentity_t *ent ) {
 KamikazeRadiusDamage
 ===============
 */
+/*
 static void KamikazeRadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float radius ) {
 	float		dist;
 	gentity_t	*ent;
@@ -1239,12 +1260,13 @@ static void KamikazeRadiusDamage( vec3_t origin, gentity_t *attacker, float dama
 //		}
 	}
 }
-
+*/
 /*
 ===============
 KamikazeShockWave
 ===============
 */
+/*
 static void KamikazeShockWave( vec3_t origin, gentity_t *attacker, float damage, float push, float radius ) {
 	float		dist;
 	gentity_t	*ent;
@@ -1305,12 +1327,13 @@ static void KamikazeShockWave( vec3_t origin, gentity_t *attacker, float damage,
 //		}
 	}
 }
-
+*/
 /*
 ===============
 KamikazeDamage
 ===============
 */
+/*
 static void KamikazeDamage( gentity_t *self ) {
 	int i;
 	float t;
@@ -1362,12 +1385,13 @@ static void KamikazeDamage( gentity_t *self ) {
 	}
 	VectorCopy(newangles, self->movedir);
 }
-
+*/
 /*
 ===============
 G_StartKamikaze
 ===============
 */
+/*
 void G_StartKamikaze( gentity_t *ent ) {
 	gentity_t	*explosion;
 	gentity_t	*te;
@@ -1422,7 +1446,7 @@ void G_StartKamikaze( gentity_t *ent ) {
 	te->r.svFlags |= SVF_BROADCAST;
 	te->s.eventParm = GTS_KAMIKAZE;
 }
-
+*/
 /*
  * Similar to CanDamage(), but more accurately checks visibility
  */
@@ -1533,18 +1557,21 @@ powerup_t G_PingEntityPowerup( gentity_t *pingPlayer, gentity_t *ent ) {
 			} else if (ent->client->ps.powerups[PW_BLUEFLAG]) {
 				return PW_BLUEFLAG;
 			}
-		} else if (g_gametype.integer == GT_1FCTF) {
+		}
+		/*
+		else if (g_gametype.integer == GT_1FCTF) {
 			if (ent->client->ps.powerups[PW_NEUTRALFLAG]) {
 				return PW_NEUTRALFLAG;
 			}
 		}
+		*/
 	} else if (ent->s.eType == ET_ITEM
 			&& ent->item
 			&& ent->item->giType == IT_TEAM
 			&& !(ent->s.eFlags & EF_NODRAW)
 			&& (((g_gametype.integer == GT_CTF || g_gametype.integer == GT_CTF_ELIMINATION)
 					&& (ent->item->giTag == PW_REDFLAG || ent->item->giTag == PW_BLUEFLAG))
-				|| (g_gametype.integer == GT_1FCTF && ent->item->giTag == PW_NEUTRALFLAG)
+				// || (g_gametype.integer == GT_1FCTF && ent->item->giTag == PW_NEUTRALFLAG)
 			   )) {
 		return ent->item->giTag;
 	}  
@@ -1612,7 +1639,8 @@ locationping_t G_PingFindEnemiesInFOV( gentity_t *pingPlayer, vec3_t muzzle, vec
 
 	if (((g_gametype.integer == GT_CTF || g_gametype.integer == GT_CTF_ELIMINATION) 
 				&& (Team_GetFlagStatus(TEAM_RED) == FLAG_DROPPED || Team_GetFlagStatus(TEAM_BLUE) == FLAG_DROPPED))
-			|| (g_gametype.integer == GT_1FCTF && Team_GetFlagStatus(TEAM_FREE) == FLAG_DROPPED)) {
+			//|| (g_gametype.integer == GT_1FCTF && Team_GetFlagStatus(TEAM_FREE) == FLAG_DROPPED)
+			) {
 		// check for dropped flags
 		powerup_t powerup;
 
@@ -1729,7 +1757,8 @@ locationping_t G_PingFindEnemies( gentity_t *pingPlayer, vec3_t muzzle, vec3_t o
 
 		if( G_IsVisible (ent, muzzle)) {
 			foundEnemy = qtrue;
-			if ((g_gametype.integer != GT_CTF && g_gametype.integer != GT_CTF_ELIMINATION && g_gametype.integer != GT_1FCTF) || powerup != PW_NONE) {
+			//if ((g_gametype.integer != GT_CTF && g_gametype.integer != GT_CTF_ELIMINATION && g_gametype.integer != GT_1FCTF) || powerup != PW_NONE) {
+			if ((g_gametype.integer != GT_CTF && g_gametype.integer != GT_CTF_ELIMINATION) || powerup != PW_NONE) {
 				break;
 			}
 			// make sure we continue in CTF modes so we are sure to find the flag(s)

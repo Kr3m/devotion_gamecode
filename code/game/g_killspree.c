@@ -335,7 +335,7 @@ static qboolean TestSpreeWhole( int streak2Test ) {
         return qfalse;
     }
 }
-
+/*
 static void G_Spreeaward( gentity_t *ent, int level) {
 	if (level < 1) {
 		return;
@@ -358,7 +358,7 @@ static void G_Spreeaward( gentity_t *ent, int level) {
 			break;
 	}
 }
-
+*/
 /*
 ==================
 G_CheckForSpree
@@ -456,6 +456,7 @@ void G_CheckForSpree( gentity_t *ent, int streak2Test, qboolean checkKillSpree )
 		    //G_GlobalSound( soundIndex );
 		    G_Sound(ent,0,soundIndex);
 	    }
+	    /*
 	    if (killSprees[ level.kSpreeUBound ]->award) {
 		    G_Spreeaward(ent, killSprees[ level.kSpreeUBound ]->spreeLevel);
 	    }
@@ -477,9 +478,11 @@ void G_CheckForSpree( gentity_t *ent, int streak2Test, qboolean checkKillSpree )
 			    //G_GlobalSound( soundIndex );
 			    G_Sound(ent,0,soundIndex);
 		    }
+		    /*
 		    if (killSprees[ i ]->award) {
 			    G_Spreeaward(ent, killSprees[ i ]->spreeLevel);
 		    }
+		    */
                     /*if( position == CENTER_PRINT ) {
                         //Only Center print for player doing the killing spree
                         CP( va("cp \"%s\"", returnedString ) );

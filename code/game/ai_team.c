@@ -131,7 +131,8 @@ int BotSortTeamMatesByBaseTravelTime(bot_state_t *bs, int *teammates, int maxtea
 	int traveltimes[MAX_CLIENTS];
 	bot_goal_t *goal = NULL;
 
-	if (gametype == GT_CTF || gametype == GT_1FCTF || gametype == GT_CTF_ELIMINATION) {
+	// if (gametype == GT_CTF || gametype == GT_1FCTF || gametype == GT_CTF_ELIMINATION) {
+	if (gametype == GT_CTF || gametype == GT_CTF_ELIMINATION) {
 		if (BotTeam(bs) == TEAM_RED)
 			goal = &ctf_redflag;
 		else
@@ -2199,6 +2200,7 @@ void BotTeamAI(bot_state_t *bs) {
 			}
 			break;
 		}
+		/*
 		case GT_DOUBLE_D:
 		{
 			//if the number of team mates changed or the domination point status changed
@@ -2272,6 +2274,7 @@ void BotTeamAI(bot_state_t *bs) {
 			}
 			break;
 		}
+		*/
 	}
 }
 

@@ -292,6 +292,7 @@ void BotReportStatus(bot_state_t *bs) {
 			else strcpy(flagstatus, S_COLOR_BLUE"F ");
 		}
 	}
+	/*
 	else if (gametype == GT_1FCTF) {
 		if (Bot1FCTFCarryingFlag(bs)) {
 			if (BotTeam(bs) == TEAM_RED) strcpy(flagstatus, S_COLOR_RED"F ");
@@ -304,7 +305,7 @@ void BotReportStatus(bot_state_t *bs) {
 			else Com_sprintf(flagstatus, sizeof(flagstatus), S_COLOR_BLUE"%2d", bs->inventory[INVENTORY_BLUECUBE]);
 		}
 	}
-
+	*/
 	switch(bs->ltgtype) {
 		case LTG_TEAMHELP:
 		{
@@ -449,6 +450,7 @@ void BotSetInfoConfigString(bot_state_t *bs) {
 			strcpy(carrying, "F ");
 		}
 	}
+	/*
 	else if (gametype == GT_1FCTF) {
 		if (Bot1FCTFCarryingFlag(bs)) {
 			strcpy(carrying, "F ");
@@ -460,7 +462,7 @@ void BotSetInfoConfigString(bot_state_t *bs) {
 			else Com_sprintf(carrying, sizeof(carrying), "%2d", bs->inventory[INVENTORY_BLUECUBE]);
 		}
 	}
-
+	*/
 	switch(bs->ltgtype) {
 		case LTG_TEAMHELP:
 		{
@@ -1408,7 +1410,7 @@ int BotAILoadMap( int restart ) {
 	return qtrue;
 }
 
-void ProximityMine_Trigger( gentity_t *trigger, gentity_t *other, trace_t *trace );
+//void ProximityMine_Trigger( gentity_t *trigger, gentity_t *other, trace_t *trace );
 
 /*
 ==================
@@ -1515,7 +1517,8 @@ int BotAIStartFrame(int time) {
 				continue;
 			}
 			// do not update missiles
-			if (ent->s.eType == ET_MISSILE && ent->s.weapon != WP_GRAPPLING_HOOK) {
+			// if (ent->s.eType == ET_MISSILE && ent->s.weapon != WP_GRAPPLING_HOOK) {
+			if (ent->s.eType == ET_MISSILE && ent->s.weapon) {
 				trap_BotLibUpdateEntity(i, NULL);
 				continue;
 			}
@@ -1526,13 +1529,14 @@ int BotAIStartFrame(int time) {
 			}
 
 			// never link prox mine triggers
+			/*
 			if (ent->r.contents == CONTENTS_TRIGGER) {
 				if (ent->touch == ProximityMine_Trigger) {
 					trap_BotLibUpdateEntity(i, NULL);
 					continue;
 				}
 			}
-                        
+                        */
 			//
 			memset(&state, 0, sizeof(bot_entitystate_t));
 			//

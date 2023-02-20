@@ -274,9 +274,9 @@ spawn_t	spawns[] = {
 	{"team_CTF_redspawn", SP_team_CTF_redspawn},
 	{"team_CTF_bluespawn", SP_team_CTF_bluespawn},
 
-	{"team_redobelisk", SP_team_redobelisk},
-	{"team_blueobelisk", SP_team_blueobelisk},
-	{"team_neutralobelisk", SP_team_neutralobelisk},
+	//{"team_redobelisk", SP_team_redobelisk},
+	//{"team_blueobelisk", SP_team_blueobelisk},
+	//{"team_neutralobelisk", SP_team_neutralobelisk},
 
 	{"item_botroam", SP_item_botroam},
 

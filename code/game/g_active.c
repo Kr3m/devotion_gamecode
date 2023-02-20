@@ -292,7 +292,7 @@ void G_FrozenPlayerDamage(gentity_t *targPlayer, gentity_t *targ, gentity_t *att
 			|| mod == MOD_WATER
 			|| mod == MOD_TARGET_LASER
 			|| mod == MOD_TELEFRAG
-			|| mod == MOD_JUICED
+			// || mod == MOD_JUICED
 	   ) {
 		// we were killed by the environment, destroy the remnant
 		if (targPlayer->frozenPlayer && targPlayer->frozenPlayer->frozenPlayer
@@ -439,7 +439,7 @@ void G_ClientThawNow( gentity_t *ent, int thawedBy ) {
 
 			if (G_IsElimTeamGT()
 					&& level.roundNumber == level.roundNumberStarted) {
-				AwardMessage(thawingEnt, EAWARD_THAWBUDDY, ++(thawingEnt->client->pers.awardCounts[EAWARD_THAWBUDDY]));
+				//AwardMessage(thawingEnt, EAWARD_THAWBUDDY, ++(thawingEnt->client->pers.awardCounts[EAWARD_THAWBUDDY]));
 			}
 			// adding score for thawing makes no sense for GT_TEAM
 			if (G_IsTeamGametype() && g_gametype.integer != GT_TEAM) {
@@ -805,10 +805,13 @@ void ClientTimerActions( gentity_t *ent, int msec ) {
 			continue;
 
 		// regenerate
+		/*
 		if( bg_itemlist[client->ps.stats[STAT_PERSISTANT_POWERUP]].giTag == PW_GUARD ) {
 			maxHealth = client->ps.stats[STAT_MAX_HEALTH] / 2;
 		}
-		else if ( client->ps.powerups[PW_REGEN] ) {
+		else
+		*/
+		if ( client->ps.powerups[PW_REGEN] ) {
 			maxHealth = client->ps.stats[STAT_MAX_HEALTH];
 		}
 		else {
@@ -852,9 +855,11 @@ void ClientTimerActions( gentity_t *ent, int msec ) {
 			client->ps.stats[STAT_ARMOR]--;
 		}
 	}
+	/*
 	if( bg_itemlist[client->ps.stats[STAT_PERSISTANT_POWERUP]].giTag == PW_AMMOREGEN ) {
 		int w, max, inc, t, i;
-		int weapList[]={WP_MACHINEGUN,WP_SHOTGUN,WP_GRENADE_LAUNCHER,WP_ROCKET_LAUNCHER,WP_LIGHTNING,WP_RAILGUN,WP_PLASMAGUN,WP_BFG,WP_NAILGUN,WP_PROX_LAUNCHER,WP_CHAINGUN};
+//		int weapList[]={WP_MACHINEGUN,WP_SHOTGUN,WP_GRENADE_LAUNCHER,WP_ROCKET_LAUNCHER,WP_LIGHTNING,WP_RAILGUN,WP_PLASMAGUN,WP_BFG,WP_NAILGUN,WP_PROX_LAUNCHER,WP_CHAINGUN};
+		int weapList[]={WP_MACHINEGUN,WP_SHOTGUN,WP_GRENADE_LAUNCHER,WP_ROCKET_LAUNCHER,WP_LIGHTNING,WP_RAILGUN,WP_PLASMAGUN,WP_BFG};
 		int weapCount = sizeof(weapList) / sizeof(int);
 		//
 		for (i = 0; i < weapCount; i++) {
@@ -888,6 +893,7 @@ void ClientTimerActions( gentity_t *ent, int msec ) {
 			}
 		}
 	}
+	*/
 }
 
 /*
@@ -1000,7 +1006,7 @@ void ClientEvents( gentity_t *ent, int oldEventSequence ) {
 
 				ent->client->ps.powerups[ j ] = 0;
 			}
-
+/*
 			if ( g_gametype.integer == GT_HARVESTER ) {
 				if ( ent->client->ps.generic1 > 0 ) {
 					if ( ent->client->sess.sessionTeam == TEAM_RED ) {
@@ -1021,6 +1027,7 @@ void ClientEvents( gentity_t *ent, int oldEventSequence ) {
 					ent->client->ps.generic1 = 0;
 				}
 			}
+*/
 			SelectSpawnPoint( ent, ent->client->ps.origin, origin, angles );
 			TeleportPlayer( ent, origin, angles );
 			break;
@@ -1034,7 +1041,7 @@ void ClientEvents( gentity_t *ent, int oldEventSequence ) {
 			// make sure the invulnerability is off
 			ent->client->invulnerabilityTime = 0;
 			// start the kamikze
-			G_StartKamikaze( ent );
+			//G_StartKamikaze( ent );
 			break;
 
 		case EV_USE_ITEM4:		// portal
@@ -1437,20 +1444,21 @@ void ClientThink_real( gentity_t *ent ) {
 
 	// set speed
 	client->ps.speed = g_speed.value;
-
+/*
 	if( bg_itemlist[client->ps.stats[STAT_PERSISTANT_POWERUP]].giTag == PW_SCOUT ) {
 		client->ps.speed *= 1.5;
 	}
 	else
+*/
 	if ( client->ps.powerups[PW_HASTE] ) {
 		client->ps.speed *= 1.3;
 	}
 
 	// Let go of the hook if we aren't firing
-	if ( client->ps.weapon == WP_GRAPPLING_HOOK &&
+	/* if ( client->ps.weapon == WP_GRAPPLING_HOOK &&
 		client->hook && !( ucmd->buttons & BUTTON_ATTACK ) ) {
 		Weapon_HookFree(client->hook);
-	}
+	} */
 
 	// set up for pmove
 	oldEventSequence = client->ps.eventSequence;
@@ -1470,6 +1478,7 @@ void ClientThink_real( gentity_t *ent ) {
 	}
 
 	// check for invulnerability expansion before doing the Pmove
+	/*
 	if (client->ps.powerups[PW_INVULNERABILITY] ) {
 		if ( !(client->ps.pm_flags & PMF_INVULEXPAND) ) {
 			vec3_t mins = { -42, -42, -42 };
@@ -1493,7 +1502,7 @@ void ClientThink_real( gentity_t *ent ) {
 			trap_LinkEntity(ent);
 		}
 	}
-
+	*/
 	pm.ps = &client->ps;
 	pm.cmd = *ucmd;
 	if ( pm.ps->pm_type == PM_DEAD && ent->client->frozen != FROZEN_ONMAP) {
@@ -1833,6 +1842,7 @@ void ClientEndFrame( gentity_t *ent ) {
 	}
 
 	// set powerup for player animation
+	/*
 	if( bg_itemlist[ent->client->ps.stats[STAT_PERSISTANT_POWERUP]].giTag == PW_GUARD ) {
 		ent->client->ps.powerups[PW_GUARD] = level.time;
 	}
@@ -1848,7 +1858,7 @@ void ClientEndFrame( gentity_t *ent ) {
 	if ( ent->client->invulnerabilityTime > level.time ) {
 		ent->client->ps.powerups[PW_INVULNERABILITY] = level.time;
 	}
-
+	*/
 	// save network bandwidth
 #if 0
 	if ( !g_synchronousClients->integer && ent->client->ps.pm_type == PM_NORMAL ) {

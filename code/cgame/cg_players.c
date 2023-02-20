@@ -1767,10 +1767,11 @@ static void CG_BreathPuffs( centity_t *cent, refEntity_t *head) {
 	int contents;
 
 	ci = &cgs.clientinfo[ cent->currentState.number ];
-
+	/*
 	if (!cg_enableBreath.integer) {
 		return;
 	}
+	*/
 	if ( cent->currentState.number == cg.snap->ps.clientNum && !cg.renderingThirdPerson) {
 		return;
 	}
@@ -1797,6 +1798,7 @@ static void CG_BreathPuffs( centity_t *cent, refEntity_t *head) {
 CG_DustTrail
 ===============
 */
+/*
 static void CG_DustTrail( centity_t *cent ) {
 	int				anim;
 	vec3_t end, vel;
@@ -1804,7 +1806,6 @@ static void CG_DustTrail( centity_t *cent ) {
 
 	if (!cg_enableDust.integer)
 		return;
-
 	if ( cent->dustTrailTime > cg.time ) {
 		return;
 	}
@@ -1839,7 +1840,7 @@ static void CG_DustTrail( centity_t *cent ) {
 				  0,
 				  cgs.media.dustPuffShader );
 }
-
+*/
 /*
 ===============
 CG_TrailItem
@@ -3316,10 +3317,11 @@ void CG_Player( centity_t *cent ) {
 	}
 
 	// hide enemies during Treasure Hunter Hiding phase
+	/*
 	if (cgs.gametype == GT_TREASURE_HUNTER && !CG_THPlayerVisible(cent)) {
 		return;
 	}
-
+	*/
 
 	memset( &legs, 0, sizeof(legs) );
 	memset( &torso, 0, sizeof(torso) );
@@ -3364,9 +3366,11 @@ void CG_Player( centity_t *cent ) {
 		renderfx |= RF_SHADOW_PLANE;
 	}
 	renderfx |= RF_LIGHTING_ORIGIN;			// use the same origin for all
+	/*
 	if( cgs.gametype == GT_HARVESTER ) {
 		CG_PlayerTokens( cent, renderfx );
 	}
+	*/
 	//
 	// add the legs
 	//
@@ -3405,7 +3409,7 @@ void CG_Player( centity_t *cent ) {
 	torso.renderfx = renderfx;
 
 	CG_AddRefEntityWithPowerups( &torso, &cent->currentState, ci->team, qfalse, ci, 2, qfalse );
-
+	/*
 	if ( cent->currentState.eFlags & EF_KAMIKAZE ) {
 
 		memset( &skull, 0, sizeof(skull) );
@@ -3451,14 +3455,12 @@ void CG_Player( centity_t *cent ) {
 			angles[2] = 0;
 			AnglesToAxis( angles, skull.axis );
 
-			/*
 			dir[2] = 0;
 			VectorInverse(dir);
 			VectorCopy(dir, skull.axis[1]);
 			VectorNormalize(skull.axis[1]);
 			VectorSet(skull.axis[2], 0, 0, 1);
 			CrossProduct(skull.axis[1], skull.axis[2], skull.axis[0]);
-			*/
 
 			skull.hModel = cgs.media.kamikazeHeadModel;
 			trap_R_AddRefEntityToScene( &skull );
@@ -3482,13 +3484,11 @@ void CG_Player( centity_t *cent ) {
 			angles[2] = 0;
 			AnglesToAxis( angles, skull.axis );
 
-			/*
 			dir[2] = 0;
 			VectorCopy(dir, skull.axis[1]);
 			VectorNormalize(skull.axis[1]);
 			VectorSet(skull.axis[2], 0, 0, 1);
 			CrossProduct(skull.axis[1], skull.axis[2], skull.axis[0]);
-			*/
 
 			skull.hModel = cgs.media.kamikazeHeadModel;
 			trap_R_AddRefEntityToScene( &skull );
@@ -3514,7 +3514,6 @@ void CG_Player( centity_t *cent ) {
 			//trap_R_AddRefEntityToScene( &skull );
 		}
 	}
-
 	if ( cent->currentState.powerups & ( 1 << PW_GUARD ) ) {
 		memcpy(&powerup, &torso, sizeof(torso));
 		powerup.hModel = cgs.media.guardPowerupModel;
@@ -3585,7 +3584,6 @@ void CG_Player( centity_t *cent ) {
 		VectorSet( powerup.axis[2], 0, 0, c );
 		trap_R_AddRefEntityToScene( &powerup );
 	}
-
 	t = cg.time - ci->medkitUsageTime;
 	if ( cent->currentState.number < MAX_CLIENTS // don't show the medkit animation for dead bodies
 			&& ci->medkitUsageTime && t < 500 ) {
@@ -3616,7 +3614,7 @@ void CG_Player( centity_t *cent ) {
 		}
 		trap_R_AddRefEntityToScene( &powerup );
 	}
-
+	*/
 	//
 	// add the head
 	//
@@ -3637,7 +3635,7 @@ void CG_Player( centity_t *cent ) {
 
 	CG_BreathPuffs(cent, &head);
 
-	CG_DustTrail(cent);
+	// CG_DustTrail(cent);
 
 	//
 	// add the gun / barrel / flash

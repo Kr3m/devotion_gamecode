@@ -276,7 +276,7 @@ void Ratscores3Message( gentity_t *ent ) {
 	
 	for (i=0 ; i < numSorted ; i++) {
 		cl = &level.clients[level.sortedClients[i]];
-
+		/*
 		Com_sprintf (entry, sizeof(entry),
 				" %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i",
 				cl->pers.awardCounts[EAWARD_FRAGS],
@@ -296,7 +296,7 @@ void Ratscores3Message( gentity_t *ent ) {
 				cl->pers.awardCounts[EAWARD_AMBUSH],
 				cl->pers.awardCounts[EAWARD_KAMIKAZE]
 			    );
-
+		*/
 		j = strlen(entry);
 		if (stringlength + j > 1024)
 			break;
@@ -324,7 +324,7 @@ void Ratscores4Message( gentity_t *ent ) {
 	
 	for (i=0 ; i < numSorted ; i++) {
 		cl = &level.clients[level.sortedClients[i]];
-
+		/*
 		Com_sprintf (entry, sizeof(entry),
 				" %i %i %i %i %i %i %i %i %i %i %i %i %i %i",
 				cl->pers.awardCounts[EAWARD_STRONGMAN],
@@ -342,7 +342,7 @@ void Ratscores4Message( gentity_t *ent ) {
 				cl->pers.awardCounts[EAWARD_RAT],
 				cl->pers.awardCounts[EAWARD_THAWBUDDY]
 			    );
-
+		*/
 		j = strlen(entry);
 		if (stringlength + j > 1024)
 			break;
@@ -464,10 +464,10 @@ void DuelStatsMessageForPlayers(gentity_t *p1, gentity_t *p2) {
 				cl->pers.damage[WP_RAILGUN],
 				cl->pers.damage[WP_PLASMAGUN],
 				cl->pers.damage[WP_BFG],
-				cl->pers.damage[WP_NAILGUN],
+/*				cl->pers.damage[WP_NAILGUN],
 				cl->pers.damage[WP_PROX_LAUNCHER],
 				cl->pers.damage[WP_CHAINGUN],
-				cl->accuracy[WP_MACHINEGUN][0],
+*/				cl->accuracy[WP_MACHINEGUN][0],
 				cl->accuracy[WP_MACHINEGUN][1],
 				cl->accuracy[WP_SHOTGUN][0],
 				cl->accuracy[WP_SHOTGUN][1],
@@ -482,14 +482,14 @@ void DuelStatsMessageForPlayers(gentity_t *p1, gentity_t *p2) {
 				cl->accuracy[WP_PLASMAGUN][0],
 				cl->accuracy[WP_PLASMAGUN][1],
 				cl->accuracy[WP_BFG][0],
-				cl->accuracy[WP_BFG][1],
-				cl->accuracy[WP_NAILGUN][0],
+				cl->accuracy[WP_BFG][1]//,
+/*				cl->accuracy[WP_NAILGUN][0],
 				cl->accuracy[WP_NAILGUN][1],
 				cl->accuracy[WP_PROX_LAUNCHER][0],
 				cl->accuracy[WP_PROX_LAUNCHER][1],
 				cl->accuracy[WP_CHAINGUN][0],
 				cl->accuracy[WP_CHAINGUN][1]
-			    );
+*/			    );
 
 		j = strlen(entry);
 		if (stringlength + j > 1024)
@@ -516,7 +516,7 @@ void AccMessage( gentity_t *ent ) {
 	char		entry[1024];
 
 	Com_sprintf (entry, sizeof(entry),
-				" %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i ",
+				" %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i ",
                                    ent->client->accuracy[WP_MACHINEGUN][0], ent->client->accuracy[WP_MACHINEGUN][1],
                                   ent->client->accuracy[WP_SHOTGUN][0], ent->client->accuracy[WP_SHOTGUN][1],
                                   ent->client->accuracy[WP_GRENADE_LAUNCHER][0], ent->client->accuracy[WP_GRENADE_LAUNCHER][1],
@@ -524,11 +524,11 @@ void AccMessage( gentity_t *ent ) {
                                   ent->client->accuracy[WP_LIGHTNING][0], ent->client->accuracy[WP_LIGHTNING][1],
                                   ent->client->accuracy[WP_RAILGUN][0], ent->client->accuracy[WP_RAILGUN][1],
                                   ent->client->accuracy[WP_PLASMAGUN][0], ent->client->accuracy[WP_PLASMAGUN][1],
-                                  ent->client->accuracy[WP_BFG][0], ent->client->accuracy[WP_BFG][1],
-                                   0,0, //Hook
-                                    ent->client->accuracy[WP_NAILGUN][0], ent->client->accuracy[WP_NAILGUN][1],
-                                    0,0,
-                                    ent->client->accuracy[WP_CHAINGUN][0], ent->client->accuracy[WP_CHAINGUN][1]
+                                  ent->client->accuracy[WP_BFG][0], ent->client->accuracy[WP_BFG][1]//,
+//                                   0,0, //Hook
+  //                                  ent->client->accuracy[WP_NAILGUN][0], ent->client->accuracy[WP_NAILGUN][1],
+    //                                0,0,
+      //                              ent->client->accuracy[WP_CHAINGUN][0], ent->client->accuracy[WP_CHAINGUN][1]
                                  );
 
 	trap_SendServerCommand( ent-g_entities, va("accs%s", entry ));
@@ -619,7 +619,7 @@ void DominationPointStatusMessage( gentity_t *ent ) {
 
 	trap_SendServerCommand( ent-g_entities, va("domStatus %i%s", level.domination_points_count, string ) );
 }
-
+/*
 void AwardMessage(gentity_t *ent, extAward_t award, int count) {
 	int i;
 	gentity_t *other;
@@ -638,7 +638,7 @@ void AwardMessage(gentity_t *ent, extAward_t award, int count) {
 		trap_SendServerCommand( other-g_entities, va("award %i %i", award, count));
 	}
 }
-
+*/
 /*
 ==================
 EliminationMessage
@@ -1017,7 +1017,8 @@ void Cmd_Give_f (gentity_t *ent)
 	if (give_all || Q_strequal(name, "weapons"))
 	{
 		ent->client->ps.stats[STAT_WEAPONS] = (1 << WP_NUM_WEAPONS) - 1 - 
-			( 1 << WP_GRAPPLING_HOOK ) - ( 1 << WP_NONE );
+			// ( 1 << WP_GRAPPLING_HOOK ) - ( 1 << WP_NONE );
+			( 1 << WP_NONE );
 		if (!give_all)
 			return;
 	}
@@ -2549,7 +2550,7 @@ void Cmd_Drop_f( gentity_t *ent ) {
 
 }
 
-
+/*
 void Cmd_PlaceToken_f( gentity_t *ent ) {
 	gentity_t *token = NULL;
 	gitem_t *item;
@@ -2616,7 +2617,7 @@ void Cmd_PlaceToken_f( gentity_t *ent ) {
 	token->r.svFlags |= SVF_BROADCAST;
 	token->r.singleClient = ent->client->sess.sessionTeam == TEAM_BLUE ? level.th_blueClientMask : level.th_redClientMask;
 }
-
+*/
 
 void SendSpectatorGroup( gentity_t *ent ) {
 	//if (!g_teamForceQueue.integer) {
@@ -4503,7 +4504,7 @@ commands_t cmds[ ] =
 
   { "drop", CMD_LIVING, Cmd_Drop_f },
 
-  { "placeToken", CMD_LIVING, Cmd_PlaceToken_f },
+  //{ "placeToken", CMD_LIVING, Cmd_PlaceToken_f },
 
   { "ready", 0, Cmd_Ready_f },
 

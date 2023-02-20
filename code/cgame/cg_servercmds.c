@@ -340,7 +340,7 @@ static void CG_ParseRatScores3( void ) {
 
 #define NUM_RAT3_DATA 16
 #define FIRST_RAT3_DATA 1
-
+	/*
 	for ( i = 0 ; i < numScores ; i++ ) {
 		cg.scores_buf[i].eaward_counts[EAWARD_FRAGS] = atoi(CG_Argv(i * NUM_RAT3_DATA + FIRST_RAT3_DATA + 1));
 		cg.scores_buf[i].eaward_counts[EAWARD_ACCURACY]= atoi(CG_Argv(i * NUM_RAT3_DATA + FIRST_RAT3_DATA + 2));
@@ -359,7 +359,7 @@ static void CG_ParseRatScores3( void ) {
 		cg.scores_buf[i].eaward_counts[EAWARD_AMBUSH] = atoi(CG_Argv(i * NUM_RAT3_DATA + FIRST_RAT3_DATA + 15));
 		cg.scores_buf[i].eaward_counts[EAWARD_KAMIKAZE] = atoi(CG_Argv(i * NUM_RAT3_DATA + FIRST_RAT3_DATA + 16));
 	}
-
+	*/
 	CG_CheckScoreUpdate();
 }
 
@@ -385,7 +385,7 @@ static void CG_ParseRatScores4( void ) {
 
 #define NUM_RAT4_DATA 14
 #define FIRST_RAT4_DATA 1
-
+	/*
 	for ( i = 0 ; i < numScores ; i++ ) {
 		cg.scores_buf[i].eaward_counts[EAWARD_STRONGMAN] = atoi(CG_Argv(i * NUM_RAT4_DATA + FIRST_RAT4_DATA + 1));
 		cg.scores_buf[i].eaward_counts[EAWARD_HERO]= atoi(CG_Argv(i * NUM_RAT4_DATA + FIRST_RAT4_DATA + 2));
@@ -403,7 +403,7 @@ static void CG_ParseRatScores4( void ) {
 		cg.scores_buf[i].eaward_counts[EAWARD_RAT]= atoi(CG_Argv(i * NUM_RAT4_DATA + FIRST_RAT4_DATA + 13));
 		cg.scores_buf[i].eaward_counts[EAWARD_THAWBUDDY]= atoi(CG_Argv(i * NUM_RAT4_DATA + FIRST_RAT4_DATA + 14));
 	}
-
+	*/
 	CG_CheckScoreUpdate();
 }
 
@@ -549,17 +549,21 @@ static duelstats_t CG_ParseDuelStatPlayer(int startarg) {
 
 	j = startarg + 8;
 	for (i = WP_GAUNTLET; i < WP_NUM_WEAPONS; ++i) {
+		/*
 		if (i == WP_GRAPPLING_HOOK) {
 			continue;
 		}
+		*/
 		st.damage[i] = atoi(CG_Argv(j));
 		j++;
 	}
 
 	for (i = WP_MACHINEGUN; i < WP_NUM_WEAPONS; ++i) {
+		/*
 		if (i == WP_GRAPPLING_HOOK) {
 			continue;
 		}
+		*/
 		st.accuracy[i][0] = atoi(CG_Argv(j));
 		j++;
 		st.accuracy[i][1] = atoi(CG_Argv(j));
@@ -612,9 +616,11 @@ static void CG_PrintDuelStats(duelstats_t st1, duelstats_t st2) {
 	CG_PrintDuelStatsWeapon("RG", WP_RAILGUN, &st1, &st2);
 	CG_PrintDuelStatsWeapon("PG", WP_PLASMAGUN, &st1, &st2);
 	CG_PrintDuelStatsWeapon("BFG", WP_BFG, &st1, &st2);
+	/*
 	CG_PrintDuelStatsWeapon("NG", WP_NAILGUN, &st1, &st2);
 	CG_PrintDuelStatsWeapon("PL", WP_PROX_LAUNCHER, &st1, &st2);
 	CG_PrintDuelStatsWeapon("CG", WP_CHAINGUN, &st1, &st2);
+	*/
 	CG_Printf(
 		"Items:  "
 		S_COLOR_GREEN    " %3iGA"
@@ -777,6 +783,7 @@ CG_ParseTreasureHunt
 
 =================
 */
+/*
 static void CG_ParseTreasureHunt( void ) {
 	if(cgs.gametype != GT_TREASURE_HUNTER) {
 		return;
@@ -791,7 +798,7 @@ static void CG_ParseTreasureHunt( void ) {
 	cgs.th_blueTokens = atoi( CG_Argv( 5 ) );
 	cgs.th_tokenStyle = atoi( CG_Argv( 6 ) );
 }
-
+*/
 /*
 =================
 CG_ParseMappage
@@ -1034,7 +1041,7 @@ static void CG_ParseReadyMask ( void ) {
 static void CG_ParseRespawnTime( void ) {
     cg.respawnTime = atoi( CG_Argv(1) );
 }
-
+/*
 static void CG_ParseAward( void ) {
 	extAward_t award = atoi( CG_Argv( 1 ) );
 	int count = atoi( CG_Argv( 2 ) );
@@ -1048,7 +1055,7 @@ static void CG_ParseAward( void ) {
 	}
 	CG_PushReward(cgs.media.eaward_sounds[award], cgs.media.eaward_medals[award], count);
 }
-
+*/
 static void CG_ParseTaunt( void ) {
 	int clientNum = atoi( CG_Argv( 1 ) );
 
@@ -1350,17 +1357,20 @@ void CG_SetConfigValues( void ) {
 
 	CG_SetScores();
 	cgs.levelStartTime = atoi( CG_ConfigString( CS_LEVEL_START_TIME ) );
-	if( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype == GT_DOUBLE_D) {
+	//if( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype == GT_DOUBLE_D) {
+	if( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION ) {
 		s = CG_ConfigString( CS_FLAGSTATUS );
 		cgs.redflag = MIN(2,MAX(0,s[0] - '0'));
 		cgs.blueflag = MIN(2,MAX(0,s[1] - '0'));
 	}
+/*
 //#ifdef MISSIONPACK
 	else if( cgs.gametype == GT_1FCTF ) {
 		s = CG_ConfigString( CS_FLAGSTATUS );
 		cgs.flagStatus = MIN(2,MAX(0,s[0] - '0'));
 	}
 //#endif
+*/
 	cg.warmup = atoi( CG_ConfigString( CS_WARMUP ) );
 }
 
@@ -1488,16 +1498,19 @@ static void CG_ConfigStringModified( void ) {
 		}
 		CG_BuildSpectatorString();
 	} else if ( num == CS_FLAGSTATUS ) {
-		if( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype == GT_DOUBLE_D) {
+		// if( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype == GT_DOUBLE_D) {
+		if( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION ) {
 			// format is rb where its red/blue, 0 is at base, 1 is taken, 2 is dropped
 			cgs.redflag = str[0] - '0';
 			cgs.blueflag = str[1] - '0';
 		}
+/*
 //#ifdef MISSIONPACK
 		else if( cgs.gametype == GT_1FCTF ) {
 			cgs.flagStatus = str[0] - '0';
 		}
 //#endif
+*/
 	}
 	else if ( num == CS_SHADERSTATE ) {
 		CG_ShaderStateChanged();
@@ -2520,12 +2533,12 @@ static void CG_ServerCommand( void ) {
 		CG_ParseSpawnpoints();
 		return;
 	}
-
+	/*
         if ( !strcmp( cmd, "award" ) ) {
 		CG_ParseAward();
 		return;
 	}
-
+	*/
         if ( !strcmp( cmd, "team" ) ) {
 		CG_ParseTeam();
 		return;
@@ -2535,12 +2548,12 @@ static void CG_ServerCommand( void ) {
 		CG_ParseTaunt();
 		return;
 	}
-
+	/*
 	if ( !strcmp( cmd, "treasureHunt" ) ) {
 		CG_ParseTreasureHunt();
 		return;
 	}
-
+	*/
         if ( !strcmp( cmd, "vresult" ) ) {
 		CG_ParseVoteResult();
 		return;

@@ -198,7 +198,7 @@ int BotNearbyGoal(bot_state_t *bs, int tfl, bot_goal_t *ltg, float range) {
 	// if the bot is carrying a flag or cubes
 	if (BotCTFCarryingFlag(bs)
 #ifdef MISSIONPACK
-		|| Bot1FCTFCarryingFlag(bs) || BotHarvesterCarryingCubes(bs)
+		//|| Bot1FCTFCarryingFlag(bs) || BotHarvesterCarryingCubes(bs)
 #endif
 		) {
 		//if the bot is just a few secs away from the base 
@@ -923,6 +923,7 @@ int BotGetLongTermGoal(bot_state_t *bs, int tfl, int retreat, bot_goal_t *goal) 
 		}
 	}
 #endif //CTF
+       /*
 	else if (gametype == GT_1FCTF) {
 		if (bs->ltgtype == LTG_GETFLAG) {
 			//check for bot typing status message
@@ -1118,6 +1119,7 @@ int BotGetLongTermGoal(bot_state_t *bs, int tfl, int retreat, bot_goal_t *goal) 
 			return qtrue;
 		}
 	}
+	*/
 //#endif
 	//normal goal stuff
 	return BotGetItemLongTermGoal(bs, tfl, goal);
@@ -1969,6 +1971,7 @@ int AINode_Seek_LTG(bot_state_t *bs)
 				range = 50;
 		}
 #endif //CTF
+       		/*
 		else if (gametype == GT_1FCTF) {
 			if (Bot1FCTFCarryingFlag(bs))
 				range = 50;
@@ -1977,6 +1980,7 @@ int AINode_Seek_LTG(bot_state_t *bs)
 			if (BotHarvesterCarryingCubes(bs))
 				range = 80;
 		}
+		*/
 		//
 		if (BotNearbyGoal(bs, bs->tfl, &goal, range)) {
 			trap_BotResetLastAvoidReach(bs->ms);
@@ -2489,6 +2493,7 @@ int AINode_Battle_Retreat(bot_state_t *bs) {
 				range = 50;
 		}
 #endif //CTF
+       		/*
 		else if (gametype == GT_1FCTF) {
 			if (Bot1FCTFCarryingFlag(bs))
 				range = 50;
@@ -2497,6 +2502,7 @@ int AINode_Battle_Retreat(bot_state_t *bs) {
 			if (BotHarvesterCarryingCubes(bs))
 				range = 80;
 		}
+		*/
 		//
 		if (BotNearbyGoal(bs, bs->tfl, &goal, range)) {
 			trap_BotResetLastAvoidReach(bs->ms);

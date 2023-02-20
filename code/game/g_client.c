@@ -677,21 +677,24 @@ void CopyToBodyQue( gentity_t *ent ) {
 
 	// if client is in a nodrop area, don't leave the body
 	contents = trap_PointContents( ent->s.origin, -1 );
+	/*
 	if ( (contents & CONTENTS_NODROP) && !(ent->s.eFlags & EF_KAMIKAZE) ) { //the check for kamikaze is a workaround for ctf4ish
             return;
 	}
-
+	*/
 	// grab a body que and cycle to the next one
 	body = level.bodyQue[ level.bodyQueIndex ];
 	level.bodyQueIndex = (level.bodyQueIndex + 1) % BODY_QUEUE_SIZE;
 
         //Check if the next body has the kamikaze, in that case skip it.
+	/*
         for(i=0;(level.bodyQue[ level.bodyQueIndex ]->s.eFlags & EF_KAMIKAZE) && (i<10);i++) {
             level.bodyQueIndex = (level.bodyQueIndex + 1) % BODY_QUEUE_SIZE;
         }
-
+	*/
 	body->s = ent->s;
 	body->s.eFlags = EF_DEAD;		// clear EF_TALK, etc
+	/*
 	if ( ent->s.eFlags & EF_KAMIKAZE ) {
                 ent->s.eFlags &= ~EF_KAMIKAZE;
 		body->s.eFlags |= EF_KAMIKAZE;
@@ -709,6 +712,7 @@ void CopyToBodyQue( gentity_t *ent ) {
 			break;
 		}
 	}
+	*/
 	body->s.powerups = 0;	// clear powerups
 	body->s.loopSound = 0;	// clear lava burning
 	body->s.number = body - g_entities;
@@ -794,7 +798,7 @@ static void frozenplayer_die( gentity_t *self, gentity_t *inflictor, gentity_t *
 			&& meansOfDeath != MOD_WATER
 			&& meansOfDeath != MOD_TARGET_LASER
 			&& meansOfDeath != MOD_TELEFRAG
-			&& meansOfDeath != MOD_JUICED
+			// && meansOfDeath != MOD_JUICED
 		   ) {
 		if (g_freezeHealth.integer && attacker && attacker->client) {
 			// remnant was destroyed by a friendly player, thaw client:
@@ -1137,9 +1141,10 @@ void respawnRound( gentity_t *ent ) {
 
 	//if(g_gametype.integer==GT_ELIMINATION && ent->client->ps.pm_type == PM_SPECTATOR && ent->client->ps.stats[STAT_HEALTH] > 0)
 	//	return;
+	/*
         if(ent->client->hook)
                 Weapon_HookFree(ent->client->hook);
-
+	*/
         trap_UnlinkEntity (ent);
 
 	ClientSpawn(ent);
@@ -1534,7 +1539,7 @@ void DisableWeapons(void)
 		client = g_entities + i;
 		client->client->ps.pm_flags |= PMF_ELIMWARMUP;
 	}
-        ProximityMine_RemoveAll(); //Remove all the prox mines
+        //ProximityMine_RemoveAll(); //Remove all the prox mines
 	return;
 }
 
@@ -2258,9 +2263,12 @@ void ClientUserinfoChanged( int clientNum ) {
 	}
 
 	// set max health
+	/*
 	if (client->ps.powerups[PW_GUARD]) {
 		client->pers.maxHealth = 200;
-	} else {
+	} else
+	*/
+       	{
 		if (client->pers.handicapforced) {
 			Info_SetValueForKey( userinfo, "handicap", va("%i", client->pers.handicapforced));
 			trap_SetUserinfo( clientNum, userinfo );
@@ -3076,11 +3084,12 @@ void ClientBegin( int clientNum ) {
 	G_LogPrintf( "ClientBegin: %i\n", clientNum );
 
 	//Send domination point names:
+	/*
 	if(g_gametype.integer == GT_DOMINATION) {
 		DominationPointNamesMessage(ent);
 		DominationPointStatusMessage(ent);
 	}
-
+	*/
         TeamCvarSet();
 
 #ifdef WITH_MULTITOURNAMENT
@@ -3115,7 +3124,7 @@ void ClientBegin( int clientNum ) {
 	G_EQPingClientReset(client);
 
 	G_UnnamedPlayerRename(ent);
-
+	/*
 	if (g_gametype.integer == GT_TREASURE_HUNTER) {
 		client->pers.th_tokens = 0;		
 		if (level.th_phase == TH_HIDE) {
@@ -3124,7 +3133,7 @@ void ClientBegin( int clientNum ) {
 		}
 		TreasureHuntMessage(ent);
 	}
-
+	*/
 	client->pers.lastKilledByStrongMan = -1;
 
 	// allow previously rejected votes again because teams may have changed
@@ -3283,10 +3292,14 @@ void ClientSpawn(gentity_t *ent) {
 		} else {
 			spawnPoint = SelectSpectatorSpawnPoint ( spawn_origin, spawn_angles);
 		}
-	} else if (g_gametype.integer == GT_DOUBLE_D) {
+	}
+	/*
+	else if (g_gametype.integer == GT_DOUBLE_D) {
 		//Double Domination uses special spawn points:
 		spawnPoint = SelectDoubleDominationSpawnPoint (client->sess.sessionTeam, spawn_origin, spawn_angles);
 	} else if (G_IsTeamGametype() && g_gametype.integer != GT_TEAM && g_gametype.integer != GT_DOMINATION) {
+	*/
+	else if (G_IsTeamGametype() && g_gametype.integer != GT_TEAM) {
 		if (g_gametype.integer == GT_ELIMINATION) {
 			if (g_ra3compat.integer && client->pers.arenaNum >= 0) {
 				spawnPoint = SelectElimSpawnPointArena ( 
@@ -3385,7 +3398,7 @@ void ClientSpawn(gentity_t *ent) {
 	client->pers.teamState.state = TEAM_ACTIVE;
 
 	// always clear the kamikaze flag
-	ent->s.eFlags &= ~EF_KAMIKAZE;
+	// ent->s.eFlags &= ~EF_KAMIKAZE;
 
 	// toggle the teleport bit so the client knows to not lerp
 	// and never clear the voted flag
@@ -3470,10 +3483,12 @@ void ClientSpawn(gentity_t *ent) {
 	if (g_passThroughInvisWalls.integer) {
 		ent->clipmask &= ~CONTENTS_PLAYERCLIP;
 	}
+	/*
 	if (g_gametype.integer == GT_TREASURE_HUNTER) {
 		// allow players to pass through each other
 		ent->r.contents = CONTENTS_CORPSE;
 	}
+	*/
 	ent->die = player_die;
 	ent->waterlevel = 0;
 	ent->watertype = 0;
@@ -3498,7 +3513,7 @@ if(!G_IsElimGT() && !g_elimination_allgametypes.integer)
 	
 	client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_GAUNTLET );
 	client->ps.ammo[WP_GAUNTLET] = -1;
-	client->ps.ammo[WP_GRAPPLING_HOOK] = -1;
+	// client->ps.ammo[WP_GRAPPLING_HOOK] = -1;
 
 	// health will count down towards max_health
 	ent->health = client->ps.stats[STAT_HEALTH] = client->ps.stats[STAT_MAX_HEALTH] + g_spawnHealthBonus.integer;
@@ -3507,7 +3522,7 @@ else
 {
 	client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_GAUNTLET );
 	client->ps.ammo[WP_GAUNTLET] = -1;
-	client->ps.ammo[WP_GRAPPLING_HOOK] = -1;
+	// client->ps.ammo[WP_GRAPPLING_HOOK] = -1;
 	if (g_elimination_machinegun.integer > 0) {
 		client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_MACHINEGUN );
 		client->ps.ammo[WP_MACHINEGUN] = g_elimination_machinegun.integer;
@@ -3540,6 +3555,7 @@ else
 		client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_BFG );
 		client->ps.ammo[WP_BFG] = g_elimination_bfg.integer;
 	}
+	/*
         if (g_elimination_grapple.integer) {
 		client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_GRAPPLING_HOOK );
 	}
@@ -3555,7 +3571,7 @@ else
 		client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_CHAINGUN );
 		client->ps.ammo[WP_CHAINGUN] = g_elimination_chain.integer;
 	}
-	
+	*/
 	ent->health = client->ps.stats[STAT_ARMOR] = g_elimination_startArmor.integer; //client->ps.stats[STAT_MAX_HEALTH]*2;
 	ent->health = client->ps.stats[STAT_HEALTH] = g_elimination_startHealth.integer; //client->ps.stats[STAT_MAX_HEALTH]*2;	
 	if (G_IsElimGT() 
@@ -3596,15 +3612,15 @@ else
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_ROCKET_LAUNCHER );
 		client->ps.ammo[WP_ROCKET_LAUNCHER] = 999;
 	}
+	/*
 	if (g_grapple.integer) {
 		client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_GRAPPLING_HOOK );
 	}
-
 	if (g_gametype.integer == GT_TREASURE_HUNTER) {
 		ent->client->ps.generic1 = ent->client->pers.th_tokens 
 			+ ((ent->client->sess.sessionTeam == TEAM_RED) ? level.th_teamTokensRed : level.th_teamTokensBlue);
 	}
-
+	*/
 	if (respawn_inplace) {
 		vec3_t origin;
 		VectorCopy(ent->frozenPlayer->r.currentOrigin, origin);
@@ -3680,7 +3696,8 @@ else
 		// spawn given items have fired
 		client->ps.weapon = 1;
 		for ( i = WP_NUM_WEAPONS - 1 ; i > 0 ; i-- ) {
-			if ( client->ps.stats[STAT_WEAPONS] & ( 1 << i ) && i !=WP_GRAPPLING_HOOK ) {
+			// if ( client->ps.stats[STAT_WEAPONS] & ( 1 << i ) && i !=WP_GRAPPLING_HOOK ) {
+			if ( client->ps.stats[STAT_WEAPONS] & ( 1 << i ) ) {
 				client->ps.weapon = i;
 				break;
 			}

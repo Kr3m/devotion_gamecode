@@ -668,7 +668,7 @@ static void ArenaServers_UpdateMenu( void ) {
 				continue;
 			}
 			break;
-
+/*
                 case GAMES_1FCTF:
 			if( servernodeptr->gametype != GT_1FCTF ) {
 				continue;
@@ -686,7 +686,7 @@ static void ArenaServers_UpdateMenu( void ) {
 				continue;
 			}
 			break;
-
+*/
 		case GAMES_ELIMINATION:
 			if( servernodeptr->gametype != GT_ELIMINATION ) {
 				continue;
@@ -704,7 +704,7 @@ static void ArenaServers_UpdateMenu( void ) {
 				continue;
 			}
 			break;
-
+/*
 		case GAMES_DOUBLE_D:
 			if( servernodeptr->gametype != GT_DOUBLE_D ) {
 				continue;
@@ -721,6 +721,7 @@ static void ArenaServers_UpdateMenu( void ) {
 				continue;
 			}
 			break;
+*/
 #ifdef WITH_MULTITOURNAMENT
                 case GAMES_MULTITOURNAMENT:
 			if( servernodeptr->gametype != GT_MULTITOURNAMENT ) {
@@ -1304,7 +1305,7 @@ static void ArenaServers_StartRefresh( void )
 		case GAMES_LMS:
 			strcpy( myargs, " lms" );
 			break;
-		
+/*		
 		case GAMES_DOUBLE_D:
 			strcpy( myargs, " dd" );
 			break;
@@ -1316,6 +1317,7 @@ static void ArenaServers_StartRefresh( void )
                 case GAMES_TH:
                     strcpy( myargs, va(" %d", GT_TREASURE_HUNTER) );
                     break;
+*/
 #ifdef WITH_MULTITOURNAMENT
                 case GAMES_MULTITOURNAMENT:
                     strcpy( myargs, va(" %d", GT_MULTITOURNAMENT) );

@@ -318,7 +318,7 @@ qboolean G_MoverPush( gentity_t *pusher, vec3_t move, vec3_t amove, gentity_t **
 	// see if any solid entities are inside the final position
 	for ( e = 0 ; e < listedEntities ; e++ ) {
 		check = &g_entities[ entityList[ e ] ];
-
+		/*
 		if ( check->s.eType == ET_MISSILE ) {
 			// if it is a prox mine
 			if ( !strcmp(check->classname, "prox mine") ) {
@@ -353,6 +353,7 @@ qboolean G_MoverPush( gentity_t *pusher, vec3_t move, vec3_t amove, gentity_t **
 				continue;
 			}
 		}
+		*/
 		// only push items and players
 		if ( check->s.eType != ET_ITEM && check->s.eType != ET_PLAYER && !check->physicsObject ) {
 			continue;
@@ -802,9 +803,12 @@ void Blocked_Door( gentity_t *ent, gentity_t *other ) {
 	if ( !other->client ) {
 		// except CTF flags!!!!
 		if( other->s.eType == ET_ITEM && other->item->giType == IT_TEAM ) {
+			/*
 			if (g_gametype.integer == GT_TREASURE_HUNTER) {
 				Team_TH_TokenDestroyed(other);
-			} else {
+			} else 
+			*/
+			{
 				Team_DroppedFlagThink( other );
 			}
 			return;

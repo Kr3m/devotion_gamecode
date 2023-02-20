@@ -883,6 +883,7 @@ static void CG_LeiPlasmaTrail( centity_t *ent, const weaponInfo_t *wi ) {
 CG_NailTrail
 ==========================
 */
+/*
 static void CG_NailTrail( centity_t *ent, const weaponInfo_t *wi ) {
 	int		step;
 	vec3_t	origin, lastPos;
@@ -953,6 +954,7 @@ static void CG_NailTrail( centity_t *ent, const weaponInfo_t *wi ) {
 	}
 
 }
+*/
 //#endif
 
 /*
@@ -1356,7 +1358,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 		cgs.media.sfx_lghit3 = trap_S_RegisterSound( "sound/weapons/lightning/lg_hit3.wav", qfalse );
 
 		break;
-
+		/*
 	case WP_GRAPPLING_HOOK:
 		MAKERGB( weaponInfo->flashDlightColor, 0.6f, 0.6f, 1.0f );
 		weaponInfo->missileModel = trap_R_RegisterModel( "models/ammo/hook/hook.md3" );
@@ -1384,7 +1386,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 		cgs.media.bulletExplosionShader = trap_R_RegisterShader( "bulletExplosion" );
 		break;
 //#endif
-
+		*/
 	case WP_MACHINEGUN:
 		MAKERGB( weaponInfo->flashDlightColor, 1, 1, 0 );
 		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/machinegun/machgf1b.wav", qfalse );
@@ -1422,6 +1424,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 		break;
 
 //#ifdef MISSIONPACK
+	/*
 	case WP_PROX_LAUNCHER:
 		weaponInfo->missileModel = trap_R_RegisterModel( "models/weaphits/proxmine.md3" );
 		weaponInfo->missileTrailFunc = CG_GrenadeTrail;
@@ -1431,6 +1434,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/proxmine/wstbfire.wav", qfalse );
 		cgs.media.grenadeExplosionShader = trap_R_RegisterShader( "grenadeExplosion" );
 		break;
+	*/
 //#endif
 
 	case WP_GRENADE_LAUNCHER:
@@ -1441,18 +1445,19 @@ void CG_RegisterWeapon( int weaponNum ) {
 		MAKERGB( weaponInfo->flashDlightColor, 1, 0.70f, 0 );
 		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/grenade/grenlf1a.wav", qfalse );
 		cgs.media.grenadeExplosionShader = trap_R_RegisterShader( "grenadeExplosion" );
-		cgs.media.grenadeBrightSkinShader = trap_R_RegisterShader( "models/ammo/grenadeBrightSkin" );
+		//cgs.media.grenadeBrightSkinShader = trap_R_RegisterShader( "models/ammo/grenadeBrightSkin" );
 		if (CG_IsTeamGametype()) {
 			if (CG_AllowColoredProjectiles()) {
-				cgs.media.grenadeBrightSkinShaderWhite = trap_R_RegisterShader( "models/ammo/grenadeBrightSkinWhite" );
+				//cgs.media.grenadeBrightSkinShaderWhite = trap_R_RegisterShader( "models/ammo/grenadeBrightSkinWhite" );
 			} else {
-				cgs.media.grenadeBrightSkinShaderBlue = trap_R_RegisterShader( "models/ammo/grenadeBrightSkinBlue" );
-				cgs.media.grenadeBrightSkinShaderRed = trap_R_RegisterShader( "models/ammo/grenadeBrightSkinRed" );
+				//cgs.media.grenadeBrightSkinShaderBlue = trap_R_RegisterShader( "models/ammo/grenadeBrightSkinBlue" );
+				//cgs.media.grenadeBrightSkinShaderRed = trap_R_RegisterShader( "models/ammo/grenadeBrightSkinRed" );
 			}
 		}
 		break;
 
 //#ifdef MISSIONPACK
+	/*
 	case WP_NAILGUN:
 		weaponInfo->ejectBrassFunc = CG_NailgunEjectBrass;
 		weaponInfo->missileTrailFunc = CG_NailTrail;
@@ -1463,6 +1468,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 		MAKERGB( weaponInfo->flashDlightColor, 1, 0.75f, 0 );
 		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/nailgun/wnalfire.wav", qfalse );
 		break;
+	*/
 //#endif
 
 	case WP_PLASMAGUN:
@@ -1926,9 +1932,11 @@ static float	CG_MachinegunSpinAngle( centity_t *cent ) {
 		cent->pe.barrelAngle = AngleMod( angle );
 		cent->pe.barrelSpinning = !!(cent->currentState.eFlags & EF_FIRING);
 //#ifdef MISSIONPACK
+		/*
 		if ( cent->currentState.weapon == WP_CHAINGUN && !cent->pe.barrelSpinning ) {
 			trap_S_StartSound( NULL, cent->currentState.number, CHAN_WEAPON, trap_S_RegisterSound( "sound/weapons/vulcan/wvulwind.wav", qfalse ) );
 		}
+		*/
 //#endif
 	}
 
@@ -2076,7 +2084,8 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 	}
 
 	// add the flash
-	if ( ( weaponNum == WP_LIGHTNING || weaponNum == WP_GAUNTLET || weaponNum == WP_GRAPPLING_HOOK )
+	// if ( ( weaponNum == WP_LIGHTNING || weaponNum == WP_GAUNTLET || weaponNum == WP_GRAPPLING_HOOK )
+	if ( ( weaponNum == WP_LIGHTNING || weaponNum == WP_GAUNTLET )
 		&& ( nonPredictedCent->currentState.eFlags & EF_FIRING ) ) 
 	{
 		// continuous flash
@@ -2362,12 +2371,14 @@ int CG_FullAmmo(int weapon) {
 			return 50;
 		case WP_BFG:
 			return 10;
+		/*
 		case WP_NAILGUN:
 			return 10;
 		case WP_PROX_LAUNCHER:
 			return 5;
 		case WP_CHAINGUN:
 			return 100;
+		*/
 		default:
 			break;
 	}
@@ -2491,7 +2502,8 @@ void CG_DrawWeaponBar1(int count, int bits){
 			
 		br=ammo*32/100;
 			
-		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		// if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		if(i!=WP_GAUNTLET ){
 			if(ammo <= 20)
 				CG_FillRect( x, y+38, br,4, red);
 			if(ammo > 20 && ammo <= 50)
@@ -2680,7 +2692,8 @@ void CG_DrawWeaponBar3(int count, int bits, float *color){
 			
 		br=ammo*20/100;
 				
-		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		// if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		if(i!=WP_GAUNTLET){
 			if(ammo <= 20)
 				CG_FillRect( 51, y+2+20-br, 4,br, red);
 			if(ammo > 20 && ammo <= 50)
@@ -2963,7 +2976,8 @@ void CG_DrawWeaponBar6(int count, int bits, float *color){
 			
 		br=ammo*26/100;
 				
-		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		// if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		if(i!=WP_GAUNTLET){
 			if(ammo <= 20)
 				CG_FillRect( x+2, y +40, br, 4, red);
 			if(ammo > 20 && ammo <= 50)
@@ -3163,7 +3177,8 @@ void CG_DrawWeaponBar8(int count, int bits, float *color){
 			
 		br=ammo*26/100;
 				
-		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		// if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		if(i!=WP_GAUNTLET){
 			if(ammo <= 20)
 				CG_FillRect( x+2, y +48, br, 4, red);
 			if(ammo > 20 && ammo <= 50)
@@ -3273,7 +3288,8 @@ void CG_DrawWeaponBar9(int count, int bits, float *color){
 			
 		br=ammo*16/100;
 				
-		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		// if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		if(i!=WP_GAUNTLET){
 			if(ammo <= 20)
 				CG_FillRect( x, y+2+16-br, 4,br, red);
 			if(ammo > 20 && ammo <= 50)
@@ -3386,7 +3402,8 @@ void CG_DrawWeaponBar10(int count, int bits, float *color){
 			
 		br=ammo * barwidth / 100;
 				
-		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		// if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		if(i!=WP_GAUNTLET){
 			if(ammo <= 20) {
 				CG_FillRect( x+CG_HeightToWidth(2), y+43, br, 2, red);
 				memcpy(bg, red, sizeof(bg));
@@ -3499,7 +3516,8 @@ void CG_DrawWeaponBar12(int count, int bits, float *color){
 			
 		br=ammo*16/100;
 				
-		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		// if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		if(i!=WP_GAUNTLET){
 			if(ammo <= 20) {
 				CG_FillRect( x, y+2+16-br, CG_HeightToWidth(2),br, red);
 				memcpy(bg, red, sizeof(bg));
@@ -3625,7 +3643,8 @@ void CG_DrawWeaponBar13(int count, int bits, float *color){
 			
 		br=ammo * barwidth / 100;
 				
-		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		// if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		if(i!=WP_GAUNTLET){
 			if(ammo <= 20) {
 				CG_FillRect( x+barindent, bar_y, br, 2, red);
 				memcpy(bg, red, sizeof(bg));
@@ -3742,7 +3761,8 @@ void CG_DrawWeaponBar14(int count, int bits, float *color){
 			
 		br=ammo * barwidth / 100;
 				
-		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		// if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		if(i!=WP_GAUNTLET){
 			if(ammo <= 20) {
 				CG_FillRect( x+barindent, bar_y, br, 2, red);
 				memcpy(bg, red, sizeof(bg));
@@ -3862,7 +3882,8 @@ void CG_DrawWeaponBar15(int count, int bits, float *color){
 			
 		br=ammo * (bar_xoffset*2) / 100;
 
-		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		// if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+		if(i!=WP_GAUNTLET){
 			if(ammo <= 20) {
 				CG_FillRect( x - bar_xoffset, bar_y, br, 2, red);
 				memcpy(bg, red, sizeof(bg));
@@ -3953,8 +3974,10 @@ void CG_NextWeapon_f( void ) {
 	cg.weaponSelectTime = cg.time;
 	original = cg.weaponSelect;
         //Part of mad hook select code:
+        /*
         if(cg.weaponSelect == WP_GRAPPLING_HOOK)
             cg.weaponSelect = 0;
+        */
 
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
 		cg.weaponSelect++;
@@ -3965,6 +3988,7 @@ void CG_NextWeapon_f( void ) {
 			continue;		// never cycle to gauntlet
 		}
                 //Sago: Mad change of grapple order
+                /*
                 if( cg.weaponSelect == WP_GRAPPLING_HOOK)  {
                     continue;
                 }
@@ -3974,11 +3998,15 @@ void CG_NextWeapon_f( void ) {
                     cg.weaponSelect = 0;
                     continue;		// never cycle to grapple unless the client wants it
 		}
+		*/
+		
 		if ( CG_WeaponSelectable( cg.weaponSelect ) ) {
 			break;
 		}
+		/*
                 if( cg.weaponSelect == WP_GRAPPLING_HOOK)
                     cg.weaponSelect = 0;
+                */
 	}
 	if ( i == MAX_WEAPONS ) {
 		cg.weaponSelect = original;
@@ -4004,8 +4032,10 @@ void CG_PrevWeapon_f( void ) {
 	cg.weaponSelectTime = cg.time;
 	original = cg.weaponSelect;
         //Part of mad hook select code:
+        /*
         if(cg.weaponSelect == WP_GRAPPLING_HOOK)
             cg.weaponSelect = 0;
+        */
 
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
 		cg.weaponSelect--;
@@ -4016,6 +4046,7 @@ void CG_PrevWeapon_f( void ) {
 			continue;		// never cycle to gauntlet
 		}
                 //Sago: Mad change of grapple order
+                /*
                 if( cg.weaponSelect == WP_GRAPPLING_HOOK)  {
                     continue;
                 }
@@ -4025,11 +4056,14 @@ void CG_PrevWeapon_f( void ) {
                     cg.weaponSelect = 0;
                     continue;		// never cycle to grapple unless the client wants it
 		}
+		*/
 		if ( CG_WeaponSelectable( cg.weaponSelect ) ) {
 			break;
 		}
+		/*
                 if( cg.weaponSelect == WP_GRAPPLING_HOOK)
                     cg.weaponSelect = 0;
+                */
 	}
 	if ( i == MAX_WEAPONS ) {
 		cg.weaponSelect = original;
@@ -4129,7 +4163,8 @@ void CG_OutOfAmmoChange( void ) {
 	}
 
 	for ( i = MAX_WEAPONS-1 ; i > 0 ; i-- ) {
-		if ( CG_WeaponSelectable( i ) && i != WP_GRAPPLING_HOOK ) {
+		// if ( CG_WeaponSelectable( i ) && i != WP_GRAPPLING_HOOK ) {
+		if ( CG_WeaponSelectable( i ) ) {
 			cg.weaponSelect = i;
 			break;
 		}
@@ -4341,6 +4376,7 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 	switch ( weapon ) {
 	default:
 //#ifdef MISSIONPACK
+	/*
 	case WP_NAILGUN:
 		if( soundType == IMPACTSOUND_FLESH ) {
 			sfx = cgs.media.sfx_nghitflesh;
@@ -4352,6 +4388,7 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 		mark = cgs.media.holeMarkShader;
 		radius = 12;
 		break;
+	*/
 //#endif
 	case WP_LIGHTNING:
 		// no explosion at LG impact, it is added with the beam
@@ -4367,6 +4404,7 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 		radius = 12;
 		break;
 //#ifdef MISSIONPACK
+	/*
 	case WP_PROX_LAUNCHER:
 		mod = cgs.media.dishFlashModel;
 		shader = cgs.media.grenadeExplosionShader;
@@ -4402,6 +4440,7 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 		// LEILEI END enhancement
 
 		break;
+	*/
 //#endif
 	case WP_GRENADE_LAUNCHER:
 		mod = cgs.media.dishFlashModel;
@@ -4531,6 +4570,7 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 		break;
 
 //#ifdef MISSIONPACK
+/*
 	case WP_CHAINGUN:
 		mod = cgs.media.bulletFlashModel;
 		if( soundType == IMPACTSOUND_FLESH ) {
@@ -4542,6 +4582,7 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 		}
 
 		mark = cgs.media.bulletMarkShader;
+*/
 #if 0
 //Some problems here
 		if (cg_leiEnhancement.integer) {
@@ -4561,7 +4602,7 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 				}
 			}
 #endif
-		r = rand() & 3;
+/*		r = rand() & 3;
 		if ( r < 2 ) {
 			sfx = cgs.media.sfx_ric1;
 		} else if ( r == 2 ) {
@@ -4572,6 +4613,7 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 
 		radius = 8;
 		break;
+*/
 //#endif
 
 	case WP_MACHINEGUN:
@@ -4684,12 +4726,14 @@ void CG_MissileHitPlayer( int weapon, vec3_t origin, vec3_t dir, int entityNum,
 	case WP_GRENADE_LAUNCHER:
 	case WP_ROCKET_LAUNCHER:
 //#ifdef MISSIONPACK
+/*
 	case WP_NAILGUN:
 	case WP_CHAINGUN:
 	case WP_PROX_LAUNCHER:
 //#endif
 		CG_MissileHitWall( weapon, 0, origin, dir, IMPACTSOUND_FLESH, missileStatus );
 		break;
+*/
 	default:
 		break;
 	}

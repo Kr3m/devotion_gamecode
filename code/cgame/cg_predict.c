@@ -423,6 +423,7 @@ static void CG_TouchItem( centity_t *cent ) {
 		}
 
 		//Currently we don't predict anything in Double Domination because it looks like we take a flag
+		/*
 		if( cgs.gametype == GT_DOUBLE_D ) {
 			if(cgs.redflag == TEAM_NONE)
 				return; //Can never pick if just one flag is NONE (because then the other is too)
@@ -437,6 +438,7 @@ static void CG_TouchItem( centity_t *cent ) {
 				return;
 			}	
 		}
+		*/
 	}
 
 	if (CG_ItemPredictionDangerous(cent)) {

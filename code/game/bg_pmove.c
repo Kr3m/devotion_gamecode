@@ -1590,7 +1590,7 @@ Sets mins, maxs, and pm->ps->viewheight
 static void PM_CheckDuck (void)
 {
 	trace_t	trace;
-
+/*
 	if ( pm->ps->powerups[PW_INVULNERABILITY] ) {
 		if ( pm->ps->pm_flags & PMF_INVULEXPAND ) {
 			// invulnerability sphere has a 42 units radius
@@ -1604,8 +1604,8 @@ static void PM_CheckDuck (void)
 		pm->ps->pm_flags |= PMF_DUCKED;
 		pm->ps->viewheight = CROUCH_VIEWHEIGHT;
 		return;
-	}
-	pm->ps->pm_flags &= ~PMF_INVULEXPAND;
+	}*/
+	//pm->ps->pm_flags &= ~PMF_INVULEXPAND;
 
 	pm->mins[0] = -15;
 	pm->mins[1] = -15;
@@ -1679,9 +1679,9 @@ static void PM_Footsteps( void ) {
 
 	if ( pm->ps->groundEntityNum == ENTITYNUM_NONE ) {
 
-		if ( pm->ps->powerups[PW_INVULNERABILITY] ) {
+		/*if ( pm->ps->powerups[PW_INVULNERABILITY] ) {
 			PM_ContinueLegsAnim( LEGS_IDLECR );
-		}
+		}*/
 		// airborne leaves position in cycle intact, but doesn't advance
 		if ( pm->waterlevel > 1 ) {
 			PM_ContinueLegsAnim( LEGS_SWIM );
@@ -2080,6 +2080,7 @@ static void PM_Weapon( void ) {
 	case WP_BFG:
 		addTime = 200;
 		break;
+		/*
 	case WP_GRAPPLING_HOOK:
 		addTime = 400;
 		break;
@@ -2092,13 +2093,14 @@ static void PM_Weapon( void ) {
 	case WP_CHAINGUN:
 		addTime = 30;
 		break;
+		*/
 	}
 
-	if ( bg_itemlist[pm->ps->stats[STAT_PERSISTANT_POWERUP]].giTag == PW_SCOUT ) {
+	/*if ( bg_itemlist[pm->ps->stats[STAT_PERSISTANT_POWERUP]].giTag == PW_SCOUT ) {
 		addTime /= 1.5;
 	} else if ( bg_itemlist[pm->ps->stats[STAT_PERSISTANT_POWERUP]].giTag == PW_AMMOREGEN ) {
 		addTime /= 1.3;
-	} else if ( pm->ps->powerups[PW_HASTE] ) {
+	} else */ if ( pm->ps->powerups[PW_HASTE] ) {
 		addTime /= 1.3;
 	}
 
@@ -2386,7 +2388,7 @@ void PmoveSingle (pmove_t *pmove) {
 		}
 	}
 
-	if ( pm->ps->powerups[PW_INVULNERABILITY] ) {
+	/* if ( pm->ps->powerups[PW_INVULNERABILITY] ) {
 		PM_InvulnerabilityMove();
 	} else
 	if ( pm->ps->powerups[PW_FLIGHT] ) {
@@ -2400,7 +2402,7 @@ void PmoveSingle (pmove_t *pmove) {
 		}
 		// We can wiggle a bit
 		PM_AirMove();
-	} else if (pm->ps->pm_flags & PMF_TIME_WATERJUMP) {
+	} */ else if (pm->ps->pm_flags & PMF_TIME_WATERJUMP) {
 		PM_WaterJumpMove();
 	} else if ( pm->waterlevel > 1 ) {
 		// swimming

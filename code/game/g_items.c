@@ -165,7 +165,7 @@ int Pickup_Powerup( gentity_t *ent, gentity_t *other ) {
 }
 
 //======================================================================
-
+/*
 int Pickup_PersistantPowerup( gentity_t *ent, gentity_t *other ) {
 	int		clientNum;
 	char	userinfo[MAX_INFO_STRING];
@@ -236,17 +236,17 @@ int Pickup_PersistantPowerup( gentity_t *ent, gentity_t *other ) {
 
 	return -1;
 }
-
+*/
 //======================================================================
 
 int Pickup_Holdable( gentity_t *ent, gentity_t *other ) {
 
 	other->client->ps.stats[STAT_HOLDABLE_ITEM] = ent->item - bg_itemlist;
-
+	/*
 	if( ent->item->giTag == HI_KAMIKAZE ) {
 		other->client->ps.eFlags |= EF_KAMIKAZE;
 	}
-
+	*/
 	return RESPAWN_HOLDABLE;
 }
 
@@ -308,8 +308,8 @@ int Pickup_Weapon (gentity_t *ent, gentity_t *other) {
 
 	Add_Ammo( other, ent->item->giTag, quantity );
 
-	if (ent->item->giTag == WP_GRAPPLING_HOOK)
-		other->client->ps.ammo[ent->item->giTag] = -1; // unlimited ammo
+	// if (ent->item->giTag == WP_GRAPPLING_HOOK)
+	//	other->client->ps.ammo[ent->item->giTag] = -1; // unlimited ammo
 
 	// team deathmatch has slow weapon respawns
 	if ( g_gametype.integer == GT_TEAM ) {
@@ -330,10 +330,12 @@ int Pickup_Health (gentity_t *ent, gentity_t *other) {
             return RESPAWN_HEALTH;
         
 	// small and mega healths will go over the max
+	/*
 	if( other->client && bg_itemlist[other->client->ps.stats[STAT_PERSISTANT_POWERUP]].giTag == PW_GUARD ) {
 		max = other->client->ps.stats[STAT_MAX_HEALTH];
 	}
 	else
+	*/
 	if ( ent->item->quantity != 5 && ent->item->quantity != 100 ) {
 		max = other->client->ps.stats[STAT_MAX_HEALTH];
 	} else {
@@ -367,11 +369,13 @@ int Pickup_Armor( gentity_t *ent, gentity_t *other ) {
 	int		upperBound;
 
 	other->client->ps.stats[STAT_ARMOR] += ent->item->quantity;
-
+	/*
 	if( other->client && bg_itemlist[other->client->ps.stats[STAT_PERSISTANT_POWERUP]].giTag == PW_GUARD ) {
 		upperBound = other->client->ps.stats[STAT_MAX_HEALTH];
 	}
-	else {
+	else
+	*/
+	{
 		upperBound = other->client->ps.stats[STAT_MAX_HEALTH] * 2;
 	}
 
@@ -442,7 +446,7 @@ void RespawnItem( gentity_t *ent ) {
 		te->s.eventParm = G_SoundIndex( "sound/items/poweruprespawn.wav" );
 		te->r.svFlags |= SVF_BROADCAST;
 	}
-
+	/*
 	if ( ent->item->giType == IT_HOLDABLE && ent->item->giTag == HI_KAMIKAZE ) {
 		// play powerup spawn sound to all clients
 		gentity_t	*te;
@@ -457,7 +461,7 @@ void RespawnItem( gentity_t *ent ) {
 		te->s.eventParm = G_SoundIndex( "sound/items/kamikazerespawn.wav" );
 		te->r.svFlags |= SVF_BROADCAST;
 	}
-
+	*/
 	// play the normal respawn sound only to nearby clients
 	G_AddEvent( ent, EV_ITEM_RESPAWN, 0 );
 
@@ -505,14 +509,15 @@ void Touch_Item (gentity_t *ent, gentity_t *other, trace_t *trace) {
 	if ( !BG_CanItemBeGrabbed( g_gametype.integer, &ent->s, &other->client->ps ) ) {
 		return;
 	}
-
+	/*
 	if ((g_gametype.integer == GT_DOMINATION || g_gametype.integer == GT_DOUBLE_D) && ent->item->giType == IT_TEAM) {
 		if (level.time < ent->dropPickupTime) {
 			return;
 		}
 	}
-
+	*/
 	//In double DD we cannot "pick up" a flag we already got
+	/*
 	if(g_gametype.integer == GT_DOUBLE_D) {
 		if( strcmp(ent->classname, "team_CTF_redflag") == 0 )
 			if(other->client->sess.sessionTeam == level.pointStatusA)
@@ -521,7 +526,7 @@ void Touch_Item (gentity_t *ent, gentity_t *other, trace_t *trace) {
 			if(other->client->sess.sessionTeam == level.pointStatusB)
 				return;
 	}
-
+	*/
 	if (ent->dropPickupTime && ent->dropClientNum == other->client->ps.clientNum && ent->dropPickupTime > level.time) {
 		return;
 	}
@@ -552,9 +557,11 @@ void Touch_Item (gentity_t *ent, gentity_t *other, trace_t *trace) {
 		respawn = Pickup_Powerup(ent, other);
 		predict = qfalse;
 		break;
+		/*
 	case IT_PERSISTANT_POWERUP:
 		respawn = Pickup_PersistantPowerup(ent, other);
 		break;
+		*/
 	case IT_TEAM:
 		respawn = Pickup_Team(ent, other);
                 //If touching a team item remove spawnprotection
@@ -686,7 +693,9 @@ gentity_t *LaunchItem( gitem_t *item, vec3_t origin, vec3_t velocity ) {
 	VectorCopy( velocity, dropped->s.pos.trDelta );
 
 	dropped->s.eFlags |= EF_BOUNCE_HALF;
-	if ((g_gametype.integer == GT_CTF || g_gametype.integer == GT_1FCTF || g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == GT_DOUBLE_D)			&& item->giType == IT_TEAM) { // Special case for CTF flags
+	// if ((g_gametype.integer == GT_CTF || g_gametype.integer == GT_1FCTF || g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == GT_DOUBLE_D)			&& item->giType == IT_TEAM) { // Special case for CTF flags
+	// if ((g_gametype.integer == GT_CTF || g_gametype.integer == GT_1FCTF || g_gametype.integer == GT_CTF_ELIMINATION) && item->giType == IT_TEAM) { // Special case for CTF flags
+	if ((g_gametype.integer == GT_CTF || g_gametype.integer == GT_CTF_ELIMINATION) && item->giType == IT_TEAM) { // Special case for CTF flags
 		dropped->think = Team_DroppedFlagThink;
 		dropped->nextthink = level.time + 30000;
 		Team_CheckDroppedItem( dropped );
@@ -859,7 +868,8 @@ void G_CheckTeamItems( void ) {
 	// Set up team stuff
 	Team_InitGame();
 
-	if( g_gametype.integer == GT_CTF || g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == GT_DOUBLE_D) {
+	// if( g_gametype.integer == GT_CTF || g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == GT_DOUBLE_D) {
+	if( g_gametype.integer == GT_CTF || g_gametype.integer == GT_CTF_ELIMINATION) {
 		gitem_t	*item;
 
 		// check for the two flags
@@ -872,6 +882,7 @@ void G_CheckTeamItems( void ) {
 			G_Printf( S_COLOR_YELLOW "WARNING: No team_CTF_blueflag in map\n" );
 		}
 	}
+	/*
 	if( g_gametype.integer == GT_1FCTF ) {
 		gitem_t	*item;
 
@@ -889,7 +900,6 @@ void G_CheckTeamItems( void ) {
 			G_Printf( S_COLOR_YELLOW "WARNING: No team_CTF_neutralflag in map\n" );
 		}
 	}
-
 	if( g_gametype.integer == GT_OBELISK ) {
 		gentity_t	*ent;
 
@@ -929,6 +939,7 @@ void G_CheckTeamItems( void ) {
 			G_Printf( S_COLOR_YELLOW "WARNING: No team_neutralobelisk in map\n" );
 		}
 	}
+	*/
 }
 
 /*
@@ -965,11 +976,13 @@ void ClearRegisteredItems( void ) {
 			RegisterItem( BG_FindItemForWeapon( WP_RAILGUN ) );
 			RegisterItem( BG_FindItemForWeapon( WP_PLASMAGUN ) );
 			RegisterItem( BG_FindItemForWeapon( WP_BFG ) );
-			RegisterItem( BG_FindItemForWeapon( WP_NAILGUN ) );
+/*			RegisterItem( BG_FindItemForWeapon( WP_NAILGUN ) );
 			RegisterItem( BG_FindItemForWeapon( WP_PROX_LAUNCHER ) );
 			RegisterItem( BG_FindItemForWeapon( WP_CHAINGUN ) );
+*/
 		}
 	}
+	/*
 	if( g_gametype.integer == GT_HARVESTER || g_gametype.integer == GT_TREASURE_HUNTER ) {
 		RegisterItem( BG_FindItem( "Red Cube" ) );
 		RegisterItem( BG_FindItem( "Blue Cube" ) );
@@ -998,7 +1011,7 @@ void ClearRegisteredItems( void ) {
 			RegisterItem( BG_FindItem( "Gold Coin" ) );
 		}
 	}
-	
+	*/
 }
 
 /*
@@ -1107,7 +1120,7 @@ void G_SpawnItem (gentity_t *ent, gitem_t *item) {
 		ent->s.eFlags |= EF_NODRAW; //Invisible in elimination
                 ent->r.svFlags |= SVF_NOCLIENT;  //Don't broadcast
         }
-
+	/*
 	if(g_gametype.integer == GT_DOUBLE_D && (strcmp(ent->classname, "team_CTF_redflag")==0 || strcmp(ent->classname, "team_CTF_blueflag")==0 || strcmp(ent->classname, "team_CTF_neutralflag") == 0 || item->giType == IT_PERSISTANT_POWERUP  ))
 		ent->s.eFlags |= EF_NODRAW; //Don't draw the flag models/persistant powerups
 
@@ -1120,7 +1133,7 @@ void G_SpawnItem (gentity_t *ent, gitem_t *item) {
 		G_SoundIndex( "sound/items/poweruprespawn.wav" );
 		G_SpawnFloat( "noglobalsound", "0", &ent->speed);
 	}
-
+	*/
 	if ( item->giType == IT_PERSISTANT_POWERUP ) {
 		ent->s.generic1 = ent->spawnflags;
 	}

@@ -88,21 +88,23 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TEAM_OVERLAY_MAXLOCATION_WIDTH	16
 
 #define	DEFAULT_MODEL			"sarge"
+/*
 #ifdef MISSIONPACK
 #define	DEFAULT_TEAM_MODEL		"sergei"
 #define	DEFAULT_TEAM_HEAD		"*sergei"
 #else
+*/
 #define	DEFAULT_TEAM_MODEL		"sarge"
 #define	DEFAULT_TEAM_HEAD		"sarge"
-#endif
+// #endif
 
 #define DEFAULT_FORCED_MODEL		"sarge"
 #define DEFAULT_FORCED_BRIGHT_SKIN	"bright"
 
 #define MAX(a,b) (((a) > (b)) ? (a) : (b))
 
-#define DEFAULT_REDTEAM_NAME		"Vim supporters"
-#define DEFAULT_BLUETEAM_NAME		"Emacs supporters"
+#define DEFAULT_REDTEAM_NAME		"Stroggs"
+#define DEFAULT_BLUETEAM_NAME		"Pagans"
 
 #define MAX_SPAWNPOINTS 64
 
@@ -308,10 +310,13 @@ typedef enum {
 	LE_LOCATIONPING,
 	LE_SCOREPLUM,
 	LE_DAMAGEPLUM,
+/*
 	LE_KAMIKAZE,
 	LE_INVULIMPACT,
 	LE_INVULJUICED,
+*/
 	LE_SHOWREFENTITY,
+
 	LE_GORE,
 } leType_t;
 
@@ -408,7 +413,7 @@ typedef struct {
 	int				guantletCount;
 	int				defendCount;
 	int				assistCount;
-	int				eaward_counts[EAWARD_NUM_AWARDS];
+	// int				eaward_counts[EAWARD_NUM_AWARDS];
 	int				captures;
 	int			flagrecovery;
 	qboolean	perfect;
@@ -920,6 +925,7 @@ typedef struct {
 	qhandle_t	blueFlagBaseModel;
 	qhandle_t	neutralFlagBaseModel;
 
+	/*
 	qhandle_t	overloadBaseModel;
 	qhandle_t	overloadTargetModel;
 	qhandle_t	overloadLightsModel;
@@ -929,6 +935,7 @@ typedef struct {
 	qhandle_t	harvesterRedSkin;
 	qhandle_t	harvesterBlueSkin;
 	qhandle_t	harvesterNeutralModel;
+	*/
 
 	qhandle_t	armorModel;
 	qhandle_t	armorIcon;
@@ -1106,10 +1113,12 @@ typedef struct {
 	qhandle_t	lmarkbullet3;
 	qhandle_t	lmarkbullet4;
 
+/*
 //#ifdef MISSIONPACK
 	qhandle_t	nailPuffShader;
 	qhandle_t	blueProxMine;
 //#endif
+*/
 
 	qhandle_t	numberShaders[11];
 
@@ -1185,6 +1194,7 @@ typedef struct {
 	// special effects models
 	qhandle_t	teleportEffectModel;
 	qhandle_t	teleportEffectShader;
+/*
 //#ifdef MISSIONPACK
 	qhandle_t	kamikazeEffectModel;
 	qhandle_t	kamikazeShockWave;
@@ -1201,6 +1211,7 @@ typedef struct {
 	qhandle_t	heartShader;
 //#endif
 	qhandle_t	invulnerabilityPowerupModel;
+*/
 
 	// scoreboard headers
 	qhandle_t	scoreboardName;
@@ -1216,7 +1227,7 @@ typedef struct {
 	qhandle_t	medalAssist;
 	qhandle_t	medalCapture;
 	// new extended medals
-	qhandle_t	eaward_medals[EAWARD_NUM_AWARDS];
+	// qhandle_t	eaward_medals[EAWARD_NUM_AWARDS];
 
 	// sounds
 	sfxHandle_t	quadSound;
@@ -1235,6 +1246,7 @@ typedef struct {
 	sfxHandle_t	sfx_railg;
 	sfxHandle_t	sfx_rockexp;
 	sfxHandle_t	sfx_plasmaexp;
+/*
 //#ifdef MISSIONPACK
 	sfxHandle_t	sfx_proxexp;
 	sfxHandle_t	sfx_nghit;
@@ -1259,6 +1271,7 @@ typedef struct {
 	sfxHandle_t	loserSound;
 	sfxHandle_t	youSuckSound;
 //#endif
+*/
 	sfxHandle_t	gibSound;
 	sfxHandle_t	gibBounce1Sound;
 	sfxHandle_t	gibBounce2Sound;
@@ -1280,7 +1293,7 @@ typedef struct {
 	sfxHandle_t pingLocationWarnLowSound;
 
 	sfxHandle_t queueJoinSound;
-
+/*
 // LEILEI
 	sfxHandle_t	lspl1Sound;
 	sfxHandle_t	lspl2Sound; // Blood Splat Noises
@@ -1295,7 +1308,8 @@ typedef struct {
 	sfxHandle_t	lshl3Sound;
 
 // LEILEI END
-
+*/
+	
 	sfxHandle_t oneMinuteSound;
 	sfxHandle_t fiveMinuteSound;
 	sfxHandle_t suddenDeathSound;
@@ -1326,7 +1340,7 @@ typedef struct {
 	sfxHandle_t firstExcellentSound;
 	sfxHandle_t firstHumiliationSound;
 
-	sfxHandle_t eaward_sounds[EAWARD_NUM_AWARDS];
+	//sfxHandle_t eaward_sounds[EAWARD_NUM_AWARDS];
 
 	sfxHandle_t takenLeadSound;
 	sfxHandle_t tiedLeadSound;
@@ -1386,7 +1400,7 @@ typedef struct {
 	sfxHandle_t	count1Sound;
 	sfxHandle_t	countFightSound;
 	sfxHandle_t	countPrepareSound;
-
+/*
 #ifdef MISSIONPACK
 	// new stuff
 	qhandle_t patrolShader;
@@ -1401,7 +1415,7 @@ typedef struct {
 	qhandle_t flagShaders[3];
 	sfxHandle_t	countPrepareTeamSound;
 #endif
-
+*/
 	sfxHandle_t ammoregenSound;
 	sfxHandle_t doublerSound;
 	sfxHandle_t guardSound;
@@ -1944,6 +1958,7 @@ extern	vmCvar_t		cg_leiSuperGoreyAwesome;	// LEILEI'S LINE!
 extern	vmCvar_t		cg_oldPlasma;
 extern	vmCvar_t		cg_trueLightning;
 extern	vmCvar_t		cg_music;
+/*
 #ifdef MISSIONPACK
 extern	vmCvar_t		cg_redTeamName;
 extern	vmCvar_t		cg_blueTeamName;
@@ -1958,6 +1973,7 @@ extern  vmCvar_t		cg_recordSPDemoName;
 extern	vmCvar_t		cg_obeliskRespawnDelay;
 extern	vmCvar_t		cg_enableDust;
 extern	vmCvar_t		cg_enableBreath;
+*/
 
 //unlagged - client options
 extern	vmCvar_t		cg_delag;
@@ -2355,6 +2371,7 @@ localEntity_t *CG_SmokePuff( const vec3_t p,
 				   qhandle_t hShader );
 void CG_BubbleTrail( vec3_t start, vec3_t end, float spacing );
 void CG_SpawnEffect( vec3_t org );
+/*
 //#ifdef MISSIONPACK
 void CG_KamikazeEffect( vec3_t org );
 void CG_ObeliskExplode( vec3_t org, int entityNum );
@@ -2363,6 +2380,7 @@ void CG_InvulnerabilityImpact( vec3_t org, vec3_t angles );
 void CG_InvulnerabilityJuiced( vec3_t org );
 void CG_LightningBoltBeam( vec3_t start, vec3_t end );
 //#endif
+*/
 void CG_ScorePlum( int client, vec3_t org, int score );
 void CG_DamagePlum( int client, vec3_t org, int damage );
 

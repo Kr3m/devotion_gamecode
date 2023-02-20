@@ -630,24 +630,28 @@ const char *UI_GetGametypeName(int gametype) {
 		return "TDM";
 	case GT_CTF:
 		return "CTF";
+	/*
 	case GT_1FCTF:
 		return "1FCTF";
 	case GT_OBELISK:
 		return "Overload";
 	case GT_HARVESTER:
 		return "Harvester";
+	*/
 	case GT_ELIMINATION:
 		return "Elimination";
 	case GT_CTF_ELIMINATION:
 		return "CTF Elim";
 	case GT_LMS:
 		return "TDM";
+	/*
 	case GT_DOUBLE_D:
 		return "DD";
         case GT_DOMINATION:
 		return "Domination";
         case GT_TREASURE_HUNTER:
 		return "TH";
+	*/
 	default:
 		break;
 	}

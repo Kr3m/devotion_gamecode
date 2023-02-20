@@ -2036,7 +2036,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	//Challenges:
 	level.teamSize = 0;
 	level.hadBots = qfalse;
-
+	/*
 	if(g_gametype.integer == GT_DOUBLE_D)
 		Team_SpawnDoubleDominationPoints();
 
@@ -2046,7 +2046,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 			level.pointStatusDom[i] = TEAM_NONE;
 		level.domination_points_count = 0; //make sure its not too big
 	}
-
+	*/
         PlayerStoreInit();
 
         //Set vote flags
@@ -4321,7 +4321,7 @@ void CheckExitRules( void ) {
 			return;
 		}
 	}
-
+	/*
 	if ( (g_gametype.integer == GT_TREASURE_HUNTER ) ) {
 		if (level.th_round == level.th_roundFinished && 
 				level.th_roundFinished >= (g_treasureRounds.integer ? g_treasureRounds.integer : 1)) {
@@ -4330,6 +4330,7 @@ void CheckExitRules( void ) {
 			return;
 		}
 	}
+	*/
 }
 
 void ResetElimRoundStats(void) {
@@ -4637,10 +4638,10 @@ void CheckDoubleDomination( void ) {
             }
             return;
         }
-
+	/*
 	if(g_gametype.integer != GT_DOUBLE_D)
 		return;
-
+	*/
 	//Don't score if we are in intermission. Both points might have been taken when we went into intermission
 	if(level.intermissiontime)
 		return;
@@ -5022,7 +5023,8 @@ void CheckDomination(void) {
 	int i;
         int scoreFactor = 1;
 
-	if ( (level.numPlayingClients < 1) || (g_gametype.integer != GT_DOMINATION) ) {
+	//if ( (level.numPlayingClients < 1) || (g_gametype.integer != GT_DOMINATION) ) {
+	if ( (level.numPlayingClients < 1) ) {
 		return;
 	}
 
@@ -5197,11 +5199,13 @@ int CountPlayerTokens(int team) {
 CheckTreasureHunter
 =============
 */
+/*
 void CheckTreasureHunter(void) {
 	int i;
 	int tokens_red;
 	int tokens_blue;
 	qboolean needsUpdate = qfalse;
+
 
 	if (g_gametype.integer != GT_TREASURE_HUNTER) {
 		return;
@@ -5439,7 +5443,7 @@ void CheckTreasureHunter(void) {
 		SendTreasureHuntMessageToAllClients();
 	}
 }
-
+*/
 /*
 =============
 CheckTournament
@@ -6367,11 +6371,13 @@ void G_RunFrame( int levelTime ) {
 
 	CheckDomination();
 
+	/*
 	//Sago: I just need to think why I placed this here... they should only spawn once
 	if(g_gametype.integer == GT_DOMINATION)
 		Team_Dom_SpawnPoints();
+	*/
 
-	CheckTreasureHunter();
+	//CheckTreasureHunter();
 
 	CheckTeamBalance();
 

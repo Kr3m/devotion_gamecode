@@ -297,7 +297,7 @@ static void CG_TreasureHuntToken ( centity_t *cent ) {
 	VectorCopy( cent->lerpOrigin, ent.oldorigin);
 
 	ent.nonNormalizedAxes = qfalse;
-
+/*
 	if (cgs.th_tokenStyle != -1 && ((item->giTag == HARVESTER_REDCUBE && team == TEAM_RED)
 				|| (item->giTag == HARVESTER_BLUECUBE && team == TEAM_BLUE))) {
 		switch (cg_thTokenIndicator.integer) {
@@ -329,7 +329,7 @@ static void CG_TreasureHuntToken ( centity_t *cent ) {
 		ent.shaderRGBA[2] = 255;
 		ent.shaderRGBA[3] = 255;
 		trap_R_AddRefEntityToScene(&ent);
-	} else {
+	} else */ {
 		// always add enemy tokens
 		trap_R_AddRefEntityToScene(&ent);
 	}
@@ -384,12 +384,12 @@ static void CG_Item( centity_t *cent ) {
 		trap_R_AddRefEntityToScene(&ent);
 		return;
 	}
-
+	/*
 	if (cgs.gametype == GT_TREASURE_HUNTER && item->giType == IT_TEAM) {
 		CG_TreasureHuntToken( cent );
 		return;
 	}
-
+	*/
 	// items bob up and down continuously
 	scale = 0.005 + cent->currentState.number * 0.00001;
 	cent->lerpOrigin[2] += 4 + cos( ( cg.time + 1000 ) *  scale ) * 4;
@@ -471,14 +471,14 @@ static void CG_Item( centity_t *cent ) {
 		// remove weird weapon looping sound
 		//trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.weaponHoverSound );
 	}
-
+	/*
 	if ( item->giType == IT_HOLDABLE && item->giTag == HI_KAMIKAZE ) {
 		VectorScale( ent.axis[0], 2, ent.axis[0] );
 		VectorScale( ent.axis[1], 2, ent.axis[1] );
 		VectorScale( ent.axis[2], 2, ent.axis[2] );
 		ent.nonNormalizedAxes = qtrue;
 	}
-
+	*/
 	// add to refresh list
 	trap_R_AddRefEntityToScene(&ent);
 
@@ -657,11 +657,12 @@ static void CG_Missile( centity_t *cent ) {
 	}
 
 //#ifdef MISSIONPACK
-	if ( cent->currentState.weapon == WP_PROX_LAUNCHER ) {
+/*	if ( cent->currentState.weapon == WP_PROX_LAUNCHER ) {
 		if (s1->generic1 == TEAM_BLUE) {
 			ent.hModel = cgs.media.blueProxMine;
 		}
 	}
+	*/
 //#endif
 
 	// convert direction of travel into axis
@@ -674,10 +675,10 @@ static void CG_Missile( centity_t *cent ) {
 		RotateAroundDirection( ent.axis, cg.time / 4 );
 	} else {
 //#ifdef MISSIONPACK
-		if ( s1->weapon == WP_PROX_LAUNCHER ) {
+		/* if ( s1->weapon == WP_PROX_LAUNCHER ) {
 			AnglesToAxis( cent->lerpAngles, ent.axis );
 		}
-		else
+		else */
 //#endif
 		{
 			RotateAroundDirection( ent.axis, s1->time );
@@ -996,7 +997,8 @@ static void CG_CalcEntityLerpPositions( centity_t *cent ) {
 
 //unlagged - projectile nudge
 	// if it's a missile but not a grappling hook
-	if ( cent->currentState.eType == ET_MISSILE && cent->currentState.weapon != WP_GRAPPLING_HOOK ) {
+	// if ( cent->currentState.eType == ET_MISSILE && cent->currentState.weapon != WP_GRAPPLING_HOOK ) {
+	if ( cent->currentState.eType == ET_MISSILE ) {
 		timeshift = CG_ProjectileNudgeTimeshift(cent);
 	}
 
@@ -1054,9 +1056,9 @@ static void CG_TeamBase( centity_t *cent ) {
 	int t, h;
 	float c;
 
-	if ( cgs.gametype == GT_CTF || cgs.gametype == GT_1FCTF ) {
+	// if ( cgs.gametype == GT_CTF || cgs.gametype == GT_1FCTF ) {
 //#else
-//	if ( cgs.gametype == GT_CTF) {
+	if ( cgs.gametype == GT_CTF) {
 //#endif
 		// show the flag base
 		memset(&model, 0, sizeof(model));
@@ -1076,6 +1078,7 @@ static void CG_TeamBase( centity_t *cent ) {
 		trap_R_AddRefEntityToScene( &model );
 	}
 //#ifdef MISSIONPACK
+/*
 	else if ( cgs.gametype == GT_OBELISK ) {
 		// show the obelisk
 		memset(&model, 0, sizeof(model));
@@ -1193,6 +1196,7 @@ static void CG_TeamBase( centity_t *cent ) {
 		trap_R_AddRefEntityToScene( &model );
 	}
 //#endif
+*/
 }
 
 /*
@@ -1245,9 +1249,11 @@ static void CG_AddCEntity( centity_t *cent ) {
 	case ET_SPEAKER:
 		CG_Speaker( cent );
 		break;
+/*
 	case ET_GRAPPLE:
 		CG_Grapple( cent );
 		break;
+*/
 	case ET_TEAM:
 		CG_TeamBase( cent );
 		break;

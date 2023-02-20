@@ -75,10 +75,12 @@ void BotVoiceChat_GetFlag(bot_state_t *bs, int client, int mode) {
 		if (!ctf_redflag.areanum || !ctf_blueflag.areanum)
 			return;
 	}
+	/*
 	else if (gametype == GT_1FCTF) {
 		if (!ctf_neutralflag.areanum || !ctf_redflag.areanum || !ctf_blueflag.areanum)
 			return;
 	}
+	*/
 	else {
 		return;
 	}
@@ -98,7 +100,7 @@ void BotVoiceChat_GetFlag(bot_state_t *bs, int client, int mode) {
 		BotGetAlternateRouteGoal(bs, BotOppositeTeam(bs));
 	}
 	//
-	BotSetTeamStatus(bs);
+	//BotSetTeamStatus(bs);
 	// remember last ordered task
 	BotRememberLastOrderedTask(bs);
 #ifdef DEBUG
@@ -112,10 +114,12 @@ BotVoiceChat_Offense
 ==================
 */
 void BotVoiceChat_Offense(bot_state_t *bs, int client, int mode) {
-	if ( gametype == GT_CTF || gametype == GT_CTF_ELIMINATION || gametype == GT_1FCTF ) {
+	// if ( gametype == GT_CTF || gametype == GT_CTF_ELIMINATION || gametype == GT_1FCTF ) {
+	if ( gametype == GT_CTF || gametype == GT_CTF_ELIMINATION ) {
 		BotVoiceChat_GetFlag(bs, client, mode);
 		return;
 	}
+	/*
 	if (gametype == GT_HARVESTER) {
 		//
 		bs->decisionmaker = client;
@@ -134,6 +138,7 @@ void BotVoiceChat_Offense(bot_state_t *bs, int client, int mode) {
 		BotRememberLastOrderedTask(bs);
 	}
 	else
+	*/
 	{
 		//
 		bs->decisionmaker = client;
@@ -147,7 +152,7 @@ void BotVoiceChat_Offense(bot_state_t *bs, int client, int mode) {
 		bs->teamgoal_time = FloatTime() + TEAM_ATTACKENEMYBASE_TIME;
 		bs->attackaway_time = 0;
 		//
-		BotSetTeamStatus(bs);
+		//BotSetTeamStatus(bs);
 		// remember last ordered task
 		BotRememberLastOrderedTask(bs);
 	}
@@ -162,6 +167,7 @@ BotVoiceChat_Defend
 ==================
 */
 void BotVoiceChat_Defend(bot_state_t *bs, int client, int mode) {
+	/*
 	if ( gametype == GT_OBELISK || gametype == GT_HARVESTER) {
 		//
 		switch(BotTeam(bs)) {
@@ -171,7 +177,9 @@ void BotVoiceChat_Defend(bot_state_t *bs, int client, int mode) {
 		}
 	}
 	else
-		if (gametype == GT_CTF || gametype == GT_CTF_ELIMINATION || gametype == GT_1FCTF ) {
+	*/
+		// if (gametype == GT_CTF || gametype == GT_CTF_ELIMINATION || gametype == GT_1FCTF ) {
+		if (gametype == GT_CTF || gametype == GT_CTF_ELIMINATION ) {
                     //
                     switch(BotTeam(bs)) {
 			case TEAM_RED: memcpy(&bs->teamgoal, &ctf_redflag, sizeof(bot_goal_t)); break;
@@ -195,7 +203,7 @@ void BotVoiceChat_Defend(bot_state_t *bs, int client, int mode) {
 	//away from defending
 	bs->defendaway_time = 0;
 	//
-	BotSetTeamStatus(bs);
+	//BotSetTeamStatus(bs);
 	// remember last ordered task
 	BotRememberLastOrderedTask(bs);
 #ifdef DEBUG
@@ -229,7 +237,7 @@ void BotVoiceChat_Patrol(bot_state_t *bs, int client, int mode) {
 	trap_BotEnterChat(bs->cs, client, CHAT_TELL);
 	BotVoiceChatOnly(bs, -1, VOICECHAT_ONPATROL);
 	//
-	BotSetTeamStatus(bs);
+	//BotSetTeamStatus(bs);
 #ifdef DEBUG
 	BotPrintTeamGoal(bs);
 #endif //DEBUG
@@ -283,7 +291,7 @@ void BotVoiceChat_Camp(bot_state_t *bs, int client, int mode) {
 	//not arrived yet
 	bs->arrive_time = 0;
 	//
-	BotSetTeamStatus(bs);
+	//BotSetTeamStatus(bs);
 	// remember last ordered task
 	BotRememberLastOrderedTask(bs);
 #ifdef DEBUG
@@ -337,7 +345,7 @@ void BotVoiceChat_FollowMe(bot_state_t *bs, int client, int mode) {
 	bs->formation_dist = 3.5 * 32;		//3.5 meter
 	bs->arrive_time = 0;
 	//
-	BotSetTeamStatus(bs);
+	//BotSetTeamStatus(bs);
 	// remember last ordered task
 	BotRememberLastOrderedTask(bs);
 #ifdef DEBUG
@@ -368,7 +376,8 @@ BotVoiceChat_ReturnFlag
 */
 void BotVoiceChat_ReturnFlag(bot_state_t *bs, int client, int mode) {
 	//if not in CTF mode
-	if ( gametype != GT_CTF && gametype != GT_CTF_ELIMINATION && gametype != GT_1FCTF ) {
+	// if ( gametype != GT_CTF && gametype != GT_CTF_ELIMINATION && gametype != GT_1FCTF ) {
+	if ( gametype != GT_CTF && gametype != GT_CTF_ELIMINATION ) {
 		return;
 	}
 	//
@@ -382,7 +391,7 @@ void BotVoiceChat_ReturnFlag(bot_state_t *bs, int client, int mode) {
 	//set the team goal time
 	bs->teamgoal_time = FloatTime() + CTF_RETURNFLAG_TIME;
 	bs->rushbaseaway_time = 0;
-	BotSetTeamStatus(bs);
+	//BotSetTeamStatus(bs);
 #ifdef DEBUG
 	BotPrintTeamGoal(bs);
 #endif //DEBUG

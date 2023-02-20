@@ -263,6 +263,7 @@ void CG_DrawInformation( void ) {
 		s = "Capture The Flag";
 		break;
 //#ifdef MISSIONPACK
+/*
 	case GT_1FCTF:
 		s = "One Flag CTF";
 		break;
@@ -272,6 +273,7 @@ void CG_DrawInformation( void ) {
 	case GT_HARVESTER:
 		s = "Harvester";
 		break;
+*/
 //#endif
 	case GT_ELIMINATION:
 		s = "Elimination";
@@ -282,6 +284,7 @@ void CG_DrawInformation( void ) {
 	case GT_LMS:
 		s = "Last Man Standing";
 		break;
+/*
 	case GT_DOUBLE_D:
 		s = "Double Domination";
 		break;
@@ -291,6 +294,7 @@ void CG_DrawInformation( void ) {
         case GT_TREASURE_HUNTER:
 		s = "Treasure Hunter";
 		break;
+*/
 #ifdef WITH_MULTITOURNAMENT
         case GT_MULTITOURNAMENT:
 		s = "Multitournament";

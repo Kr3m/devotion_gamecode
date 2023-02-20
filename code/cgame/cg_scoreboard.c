@@ -239,14 +239,17 @@ qboolean CG_DrawRatAccboard( void ) {
         trap_R_SetColor( colorWhite );
 
         for( counter = WP_MACHINEGUN; counter < WP_NUM_WEAPONS ; counter++ ){
-                if( cg_weapons[counter].weaponIcon && counter != WP_PROX_LAUNCHER && counter != WP_GRAPPLING_HOOK )
+                // if( cg_weapons[counter].weaponIcon && counter != WP_PROX_LAUNCHER && counter != WP_GRAPPLING_HOOK )
+                if( cg_weapons[counter].weaponIcon )
                         i++;
         }
+
 
 	x = (SCREEN_WIDTH - RAT_ACCCOLUMN_WIDTH*i)/2.0;
 
         for( counter = WP_MACHINEGUN ; counter < WP_NUM_WEAPONS ; counter++ ){
-                if( cg_weapons[counter].weaponIcon && counter != WP_PROX_LAUNCHER && counter != WP_GRAPPLING_HOOK ){
+                // if( cg_weapons[counter].weaponIcon && counter != WP_PROX_LAUNCHER && counter != WP_GRAPPLING_HOOK ){
+                if( cg_weapons[counter].weaponIcon ){
                         CG_DrawPic( x , RAT_ACCBOARD_YPOS - RAT_ACCITEM_SIZE , RAT_ACCITEM_SIZE, RAT_ACCITEM_SIZE, cg_weapons[counter].weaponIcon );
                         if( cg.accuracys[counter-WP_MACHINEGUN][0] > 0 ) {
 				CG_DrawTinyScoreStringColor(x + RAT_ACCITEM_SIZE + SCORETINYCHAR_WIDTH/2.0,
@@ -330,7 +333,7 @@ static int CG_RatDrawClientAward(int y, int x, int count, qhandle_t hShader) {
 
 	return x;
 }
-
+/*
 static void CG_RatDrawClientMedals(int y, score_t *score, float *color, float fade) {
 	char string[1024];
 	clientInfo_t *ci;
@@ -404,7 +407,7 @@ static void CG_RatDrawClientMedals(int y, score_t *score, float *color, float fa
 	x = CG_RatDrawClientAward(y, x, score->impressiveCount, cgs.media.medalImpressive);
 
 }
-
+*/
 static void CG_RatDrawClientStats(int y, score_t *score, float *color, float fade) {
 	char string[1024];
 	clientInfo_t *ci;
@@ -761,9 +764,11 @@ static int CG_RatTeamScoreboard(int y, team_t team, float fade, int maxClients, 
 
 		if (!countOnly) {
 			switch (ShowScoreboardNum()) {
+			/*
 			case 1:
 				CG_RatDrawClientMedals(y + lineHeight * count, score, color, fade);
 				break;
+			*/
 			case 2:
 				CG_RatDrawClientStats(y + lineHeight * count, score, color, fade);
 				break;
@@ -957,6 +962,7 @@ qboolean CG_DrawRatScoreboard(void) {
 		s = "CTF Elimination";
 	} else if ( cgs.gametype == GT_LMS ) {
 		s = "Last Man Standing";
+	/*
 	} else if ( cgs.gametype == GT_DOUBLE_D ) {
 		s = "Double Domination";
 	} else if ( cgs.gametype == GT_1FCTF ) {
@@ -973,6 +979,7 @@ qboolean CG_DrawRatScoreboard(void) {
           } else if ( cgs.gametype == GT_MULTITOURNAMENT ) {
 		s = "Multitournament";
 #endif
+	*/
 	} else {
 		s = "";
 	}

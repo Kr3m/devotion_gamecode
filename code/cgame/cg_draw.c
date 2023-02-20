@@ -479,24 +479,24 @@ void CG_DrawFlagModel( float x, float y, float w, float h, int team, qboolean fo
 
 		if( team == TEAM_RED ) {
 			handle = cgs.media.redFlagModel;
-			if(cgs.gametype == GT_DOUBLE_D){
+			/* if(cgs.gametype == GT_DOUBLE_D){
 				if(cgs.redflag == TEAM_BLUE)
 					handle = cgs.media.blueFlagModel;
 				if(cgs.redflag == TEAM_FREE)
 					handle = cgs.media.neutralFlagModel;
 				if(cgs.redflag == TEAM_NONE)
 					handle = cgs.media.neutralFlagModel;
-			}
+			}*/
 		} else if( team == TEAM_BLUE ) {
 			handle = cgs.media.blueFlagModel;
-			if(cgs.gametype == GT_DOUBLE_D){
+			/* if(cgs.gametype == GT_DOUBLE_D){
 				if(cgs.redflag == TEAM_BLUE)
 					handle = cgs.media.blueFlagModel;
 				if(cgs.redflag == TEAM_FREE)
 					handle = cgs.media.neutralFlagModel;
 				if(cgs.redflag == TEAM_NONE)
 					handle = cgs.media.neutralFlagModel;
-			}
+			}*/
 		} else if( team == TEAM_FREE ) {
 			handle = cgs.media.neutralFlagModel;
 		} else {
@@ -770,10 +770,11 @@ static vec4_t weaponColors[WP_NUM_WEAPONS] =
 	{ 0.0, 1.0, 0.0, 1.0 }, // WP_RAILGUN,
 	{ 1.0, 0.0, 1.0, 1.0 }, // WP_PLASMAGUN,
 	{ 0.0, 0.4, 1.0, 1.0 }, // WP_BFG,
-	{ 0.4, 0.6, 0.0, 1.0 }, // WP_GRAPPLING_HOOK,
+/*	{ 0.4, 0.6, 0.0, 1.0 }, // WP_GRAPPLING_HOOK,
 	{ 1.0, 0.6, 0.6, 1.0 }, // WP_NAILGUN,
 	{ 1.0, 0.6, 0.4, 1.0 }, // WP_PROX_LAUNCHER,
 	{ 0.8, 0.8, 0.8, 1.0 }, // WP_CHAINGUN,
+*/
 	};
 
 static float *CG_GetWeaponColor(int weapon) {
@@ -2017,7 +2018,8 @@ static void CG_DrawStatusBar( void ) {
 					   cgs.media.armorModel, 0, origin, angles );
 	}
         
-        if( cgs.gametype == GT_HARVESTER || cgs.gametype == GT_TREASURE_HUNTER) {
+        /*
+	if( cgs.gametype == GT_HARVESTER || cgs.gametype == GT_TREASURE_HUNTER) {
 		origin[0] = 90;
 		origin[1] = 0;
 		origin[2] = -10;
@@ -2029,7 +2031,7 @@ static void CG_DrawStatusBar( void ) {
 		}
 		CG_Draw3DModel( 470 + CHAR_WIDTH*3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, handle, 0, origin, angles );
 	}
-        
+        */
         
 	//
 	// ammo
@@ -2102,7 +2104,8 @@ static void CG_DrawStatusBar( void ) {
 	}
         
         //Skulls!
-        if(cgs.gametype == GT_HARVESTER || cgs.gametype == GT_TREASURE_HUNTER)
+        /*
+	if(cgs.gametype == GT_HARVESTER || cgs.gametype == GT_TREASURE_HUNTER)
         {
             value = ps->generic1;
             if (value > 0 ) {
@@ -2112,15 +2115,18 @@ static void CG_DrawStatusBar( void ) {
                     // if we didn't draw a 3D icon, draw a 2D icon for skull
                     if ( !cg_draw3dIcons.integer && cg_drawIcons.integer ) {
                             if( cg.snap->ps.persistant[PERS_TEAM] == TEAM_BLUE ) {
-                                    handle = cgs.gametype == GT_HARVESTER ? cgs.media.redCubeIcon : cgs.media.blueCubeIcon;
+                                    //handle = cgs.gametype == GT_HARVESTER ? cgs.media.redCubeIcon : cgs.media.blueCubeIcon;
+                                    handle = cgs.media.blueCubeIcon;
                             } else {
-                                    handle = cgs.gametype == GT_HARVESTER ? cgs.media.blueCubeIcon : cgs.media.redCubeIcon;
+                                    //handle = cgs.gametype == GT_HARVESTER ? cgs.media.blueCubeIcon : cgs.media.redCubeIcon;
+                                    handle = cgs.media.redCubeIcon;
                             }
                             CG_DrawPic( 470 + CHAR_WIDTH*3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, handle );
                     }
 
             }
         }
+	*/
 }
 #endif
 
@@ -3449,7 +3455,7 @@ void CG_DrawEliminationStatus(void) {
 	}
 
 }
-
+/*
 void CG_DrawTreasureHunterStatus(void) {
 	const char	*s;
 	int y;
@@ -3471,7 +3477,7 @@ void CG_DrawTreasureHunterStatus(void) {
 	w = CG_DrawScoreBox(x, y, TEAM_RED, s, cg.snap->ps.persistant[PERS_TEAM] == TEAM_RED);
 	x -= w;
 }
-
+*/
 #define PUSHNOTIFY_CHARS 7
 void CG_DrawPushNotify(void) {
 	const char	*pusherInfo;
@@ -3543,10 +3549,10 @@ static void CG_DrawUpperRight(stereoFrame_t stereoFrame)
 	if ( cgs.gametype == GT_CTF_ELIMINATION ) {
 		y = CG_DrawCTFoneway(y);
 	}
-	else
+	/* else
 	if ( cgs.gametype == GT_DOMINATION ) {
 		y = CG_DrawDomStatus(y);
-	}
+	}*/
 	
 	if ( cg_drawSnapshot.integer ) {
 		y = CG_DrawSnapshot( y );
@@ -3559,11 +3565,11 @@ static void CG_DrawUpperRight(stereoFrame_t stereoFrame)
 		/*if (cgs.clientinfo[ cg.clientNum ].isDead)
 			y = CG_DrawEliminationDeathMessage( y);*/
 	}
-
+/*
 	if (cgs.gametype==GT_TREASURE_HUNTER) {
 		y = CG_DrawTreasureHuntTimer( y );
 	}
-
+*/
 	//y = CG_DrawFollowMessage( y );
 	
 	if ( cg_drawSpeed.integer ) {
@@ -3830,7 +3836,7 @@ static float CG_DrawScores( float y ) {
 				}
 			}
 		}
-                
+                /*
                 if ( cgs.gametype == GT_DOUBLE_D ) {
 			// Display Domination point status
 			
@@ -3839,7 +3845,7 @@ static float CG_DrawScores( float y ) {
 					CG_DrawPic( x, y1, w, 32, cgs.media.ddPointSkinB[cgs.blueflag] );
 				}
 		}
-                
+                */
 		s = va( "%i", s1 );
 		w = CG_DrawScoreBox(x, y, TEAM_RED, s, cg.snap->ps.persistant[PERS_TEAM] == TEAM_RED);
 		x -= w;
@@ -3856,7 +3862,7 @@ static float CG_DrawScores( float y ) {
 				}
 			}
 		}
-                
+                /*
                 if ( cgs.gametype == GT_DOUBLE_D ) {
 			// Display Domination point status
 			
@@ -3881,7 +3887,7 @@ static float CG_DrawScores( float y ) {
 			s = va("^1%3i%% ^4%3i%%",cg.redObeliskHealth,cg.blueObeliskHealth);
 			CG_DrawSmallString( x, y1, s, 1.0F);
                 }
-                
+                */
                 
 
 		if (CG_IsTeamGametype() && cgs.gametype != GT_TEAM) {
@@ -4150,9 +4156,10 @@ static float CG_DrawRadar( float y ) {
 	float distance;
 
 
-	if (cgs.gametype != GT_CTF &&
-			cgs.gametype != GT_CTF_ELIMINATION &&
-			cgs.gametype != GT_1FCTF) {
+	if (cgs.gametype != GT_CTF
+			&& cgs.gametype != GT_CTF_ELIMINATION
+			// && cgs.gametype != GT_1FCTF
+			) {
 		return y;
 	}
 
@@ -5344,6 +5351,7 @@ static void CG_DrawCenterString( void ) {
 CG_DrawCenter1FctfString
 =====================
 */
+/*
 static void CG_DrawCenter1FctfString( void ) {
     #ifndef MISSIONPACK
     int		x, y, w;
@@ -5388,7 +5396,7 @@ static void CG_DrawCenter1FctfString( void ) {
     
     #endif
 }
-
+*/
 
 
 /*
@@ -5396,6 +5404,7 @@ static void CG_DrawCenter1FctfString( void ) {
 CG_DrawCenterDDString
 =====================
 */
+/*
 static void CG_DrawCenterDDString( void ) {
     #ifndef MISSIONPACK
     int		x, y, w;
@@ -5464,7 +5473,7 @@ static void CG_DrawCenterDDString( void ) {
     
     #endif
 }
-
+*/
 
 /*
 ================================================================================
@@ -5806,12 +5815,13 @@ static void CG_ScanForCrosshairEntity( void ) {
 	}
 
 	// hide enemies during Treasure Hunter Hiding phase
+	/*
 	if (cgs.gametype == GT_TREASURE_HUNTER 
 			&& trace.entityNum < MAX_CLIENTS
 			&& !CG_THPlayerVisible(&cg_entities[ trace.entityNum ])) {
 		return;
 	}
-
+	*/
 	if (throughwall && lookedThroughWall) {
 		// XXX: technically, this could give an enemy's position away
 		// when he obscures the position of a friend
@@ -5988,7 +5998,7 @@ static void CG_DrawReloadIndicator( void ) {
 			case WP_MACHINEGUN:
 			case WP_PLASMAGUN:
 			case WP_BFG:
-			case WP_CHAINGUN:
+			// case WP_CHAINGUN:
 				return;
 		}
 		width = MIN(1.0,(float)time/MAX_RELOADTIME) * CG_HeightToWidth(cg_reloadIndicatorWidth.value);
@@ -6347,7 +6357,8 @@ qboolean CG_DrawAccboard( void ) {
         trap_R_SetColor( colorWhite );
 
         for( counter = 0; counter < WP_NUM_WEAPONS ; counter++ ){
-                if( cg_weapons[counter+2].weaponIcon && counter != WP_PROX_LAUNCHER && counter != WP_GRAPPLING_HOOK )
+                // if( cg_weapons[counter+2].weaponIcon && counter != WP_PROX_LAUNCHER && counter != WP_GRAPPLING_HOOK )
+                if( cg_weapons[counter+2].weaponIcon )
                         i++;
         }
 
@@ -6356,7 +6367,8 @@ qboolean CG_DrawAccboard( void ) {
         i = 0;
 
         for( counter = 0 ; counter < WP_NUM_WEAPONS ; counter++ ){
-                if( cg_weapons[counter+2].weaponIcon && counter != WP_PROX_LAUNCHER && counter != WP_GRAPPLING_HOOK ){
+                // if( cg_weapons[counter+2].weaponIcon && counter != WP_PROX_LAUNCHER && counter != WP_GRAPPLING_HOOK ){
+                if( cg_weapons[counter+2].weaponIcon ){
                         CG_DrawPic( ACCBOARD_XPOS + 10, ACCBOARD_YPOS + 10 +i*ACCBOARD_HEIGHT, ACCITEM_SIZE, ACCITEM_SIZE, cg_weapons[counter+2].weaponIcon );
                         if( cg.accuracys[counter][0] > 0 )
                                 CG_DrawSmallStringColor(ACCBOARD_XPOS + 10 + ACCITEM_SIZE + 10, ACCBOARD_YPOS + 10 +i*ACCBOARD_HEIGHT + ACCITEM_SIZE/2 - SMALLCHAR_HEIGHT/2 ,
@@ -6908,7 +6920,8 @@ static void CG_Draw2D(stereoFrame_t stereoFrame)
 		// don't draw any status if dead or the scoreboard is being explicitly shown
 		if ( !cg.showScores && cg.snap->ps.stats[STAT_HEALTH] > 0 ) {
 			CG_DrawZoomScope();
-			if ((cg_ratStatusbar.integer >= 4 && cg_ratStatusbar.integer <= 5) && cgs.gametype != GT_HARVESTER && cgs.gametype != GT_TREASURE_HUNTER) {
+			// if ((cg_ratStatusbar.integer >= 4 && cg_ratStatusbar.integer <= 5) && cgs.gametype != GT_HARVESTER && cgs.gametype != GT_TREASURE_HUNTER) {
+			if ((cg_ratStatusbar.integer >= 4 && cg_ratStatusbar.integer <= 5)) {
 				CG_DrawRatStatusBar4Bg();
 			}
 			CG_DrawHudDamageIndicator();
@@ -6920,7 +6933,8 @@ static void CG_Draw2D(stereoFrame_t stereoFrame)
 				CG_DrawTimedMenus();
 			}
 #else
-			if (cg_ratStatusbar.integer && cgs.gametype != GT_HARVESTER && cgs.gametype != GT_TREASURE_HUNTER) {
+			// if (cg_ratStatusbar.integer && cgs.gametype != GT_HARVESTER && cgs.gametype != GT_TREASURE_HUNTER) {
+			if (cg_ratStatusbar.integer) {
 				switch (cg_ratStatusbar.integer) {
 					case 4:
 					case 5:
@@ -7012,10 +7026,10 @@ static void CG_Draw2D(stereoFrame_t stereoFrame)
 	cg.scoreBoardShowing = CG_DrawScoreboard();
 	if ( !cg.scoreBoardShowing) {
 		CG_DrawEliminationStatus();
-		CG_DrawTreasureHunterStatus();
+		//CG_DrawTreasureHunterStatus();
 		CG_DrawPushNotify();
-                CG_DrawCenterDDString();
-                CG_DrawCenter1FctfString();
+                //CG_DrawCenterDDString();
+                //CG_DrawCenter1FctfString();
 		CG_DrawCenterString();
 
 

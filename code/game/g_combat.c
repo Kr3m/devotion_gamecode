@@ -64,9 +64,11 @@ void DamagePlum( gentity_t *ent, gentity_t *target, int mod, int damage ) {
 			case MOD_RAILGUN:
 			case MOD_BFG:
 			case MOD_BFG_SPLASH:
+			/*
 			case MOD_NAIL:
 			case MOD_PROXIMITY_MINE:
 			case MOD_KAMIKAZE:
+			*/
 				break;
 			default:
 				return;
@@ -217,7 +219,8 @@ void TossClientItems( gentity_t *self ) {
 	// weapon that isn't the mg or gauntlet.  Without this, a client
 	// can pick up a weapon, be killed, and not drop the weapon because
 	// their weapon change hasn't completed yet and they are still holding the MG.
-	if ( weapon == WP_MACHINEGUN || weapon == WP_GRAPPLING_HOOK ) {
+	// if ( weapon == WP_MACHINEGUN || weapon == WP_GRAPPLING_HOOK ) {
+	if ( weapon == WP_MACHINEGUN ) {
 		if ( self->client->ps.weaponstate == WEAPON_DROPPING ) {
 			weapon = self->client->pers.cmd.weapon;
 		}
@@ -231,7 +234,9 @@ void TossClientItems( gentity_t *self ) {
 	//Nothing!	
 	}
 	else
-	if ( weapon > WP_MACHINEGUN && weapon != WP_GRAPPLING_HOOK && 
+	// if ( weapon > WP_MACHINEGUN && weapon != WP_GRAPPLING_HOOK && 
+	//	self->client->ps.ammo[ weapon ] ) {
+	if ( weapon > WP_MACHINEGUN && 
 		self->client->ps.ammo[ weapon ] ) {
 		// find the item type for this weapon
 		item = BG_FindItemForWeapon( weapon );
@@ -424,6 +429,7 @@ void GibEntity( gentity_t *self, int killer ) {
 	int i;
 
 	//if this entity still has kamikaze
+	/*
 	if (self->s.eFlags & EF_KAMIKAZE) {
 		// check if there is a kamikaze timer around for this owner
 		for (i = 0; i < MAX_GENTITIES; i++) {
@@ -438,6 +444,7 @@ void GibEntity( gentity_t *self, int killer ) {
 			break;
 		}
 	}
+	*/
 	G_AddEvent( self, EV_GIB_PLAYER, killer );
 	self->takedamage = qfalse;
 	self->s.eType = ET_INVISIBLE;
@@ -463,7 +470,7 @@ void body_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int d
 	if (meansOfDeath == MOD_GAUNTLET && attacker && attacker->client) {
 		if (++attacker->client->pers.gauntCorpseGibCount >= BUTCHER_GIBCOUNT) {
 			attacker->client->pers.gauntCorpseGibCount -= BUTCHER_GIBCOUNT;
-			AwardMessage(attacker, EAWARD_BUTCHER, ++(attacker->client->pers.awardCounts[EAWARD_BUTCHER]));
+			// AwardMessage(attacker, EAWARD_BUTCHER, ++(attacker->client->pers.awardCounts[EAWARD_BUTCHER]));
 		}
 	}
 
@@ -495,13 +502,15 @@ char	*modNames[] = {
 	"MOD_FALLING",
 	"MOD_SUICIDE",
 	"MOD_TARGET_LASER",
-	"MOD_TRIGGER_HURT",
+	"MOD_TRIGGER_HURT"
+	/*
 	"MOD_NAIL",
 	"MOD_CHAINGUN",
 	"MOD_PROXIMITY_MINE",
 	"MOD_KAMIKAZE",
 	"MOD_JUICED",
 	"MOD_GRAPPLE"
+	*/
 };
 
 /*
@@ -509,16 +518,18 @@ char	*modNames[] = {
 Kamikaze_DeathActivate
 ==================
 */
+/*
 void Kamikaze_DeathActivate( gentity_t *ent ) {
 	G_StartKamikaze(ent);
 	G_FreeEntity(ent);
 }
-
+*/
 /*
 ==================
 Kamikaze_DeathTimer
 ==================
 */
+/*
 void Kamikaze_DeathTimer( gentity_t *self ) {
 	gentity_t *ent;
 
@@ -531,7 +542,7 @@ void Kamikaze_DeathTimer( gentity_t *self ) {
 
 	ent->activator = self;
 }
-
+*/
 
 /*
 ==================
@@ -621,7 +632,7 @@ void rampage_notify(gentity_t *attacker) {
 		return;
 	}
 
-	attacker->client->pers.awardCounts[EAWARD_FRAGS]++;
+	// attacker->client->pers.awardCounts[EAWARD_FRAGS]++;
 
 	if (!g_usesRatVM.integer && !G_MixedClientHasRatVM(attacker->client)) {
 		int soundIndex;
@@ -637,9 +648,9 @@ void rampage_notify(gentity_t *attacker) {
 		return;
 	}
 
-	AwardMessage(attacker, EAWARD_FRAGS, attacker->client->pers.awardCounts[EAWARD_FRAGS]);
+	// AwardMessage(attacker, EAWARD_FRAGS, attacker->client->pers.awardCounts[EAWARD_FRAGS]);
 }
-
+/*
 void G_CheckKamikazeAward(gentity_t *attacker, int killsBefore, int deathsBefore) {
 	if (!attacker || !attacker->client) {
 		return;
@@ -748,7 +759,8 @@ static int G_AmbushCalculateTimeshiftTime(int meansOfDeath, gentity_t *attacker,
 			|| meansOfDeath == MOD_SHOTGUN
 			|| meansOfDeath == MOD_LIGHTNING
 			|| meansOfDeath == MOD_RAILGUN
-			|| meansOfDeath == MOD_CHAINGUN) {
+			//|| meansOfDeath == MOD_CHAINGUN
+			) {
 		int timeshiftTime;
 		G_DoTimeShiftFor(attacker);
 		timeshiftTime = victim->client->timeshiftTime;
@@ -818,7 +830,8 @@ void G_CheckVaporizedAward(gentity_t *attacker, gentity_t *victim) {
 		i = (i + DAMAGE_HISTORY - 1 ) % DAMAGE_HISTORY;
 	} while (i != client->damage_history_head);
 }
-
+*/
+/*
 void G_CheckDeathEAwards(gentity_t *victim, gentity_t *inflictor, gentity_t *attacker, int meansOfDeath) {
 	if (!attacker || !attacker->client || attacker == victim || OnSameTeam(attacker, victim)) {
 		return;
@@ -831,10 +844,10 @@ void G_CheckDeathEAwards(gentity_t *victim, gentity_t *inflictor, gentity_t *att
 			(1 << PW_INVIS) |
 			(1 << PW_REGEN) |
 			(1 << PW_FLIGHT))) {
-		AwardMessage(attacker, EAWARD_SHOWSTOPPER, ++(attacker->client->pers.awardCounts[EAWARD_SHOWSTOPPER]));
+		// AwardMessage(attacker, EAWARD_SHOWSTOPPER, ++(attacker->client->pers.awardCounts[EAWARD_SHOWSTOPPER]));
 	}
 
-
+	
 	if (meansOfDeath == MOD_PLASMA || meansOfDeath == MOD_PLASMA_SPLASH) {
 		G_CheckVaporizedAward(attacker, victim);
 	}
@@ -843,7 +856,7 @@ void G_CheckDeathEAwards(gentity_t *victim, gentity_t *inflictor, gentity_t *att
 		case MOD_TELEFRAG:
 			if (!G_IsElimTeamGT() 
 					|| level.roundNumber == level.roundNumberStarted) {
-				AwardMessage(attacker, EAWARD_TELEFRAG, ++(attacker->client->pers.awardCounts[EAWARD_TELEFRAG]));
+				// AwardMessage(attacker, EAWARD_TELEFRAG, ++(attacker->client->pers.awardCounts[EAWARD_TELEFRAG]));
 			}
 			break;
 		case MOD_ROCKET:
@@ -852,19 +865,19 @@ void G_CheckDeathEAwards(gentity_t *victim, gentity_t *inflictor, gentity_t *att
 		case MOD_GRENADE_SPLASH:
 		case MOD_PLASMA:
 		case MOD_PLASMA_SPLASH:
-		case MOD_NAIL:
+		// case MOD_NAIL:
 		case MOD_BFG:
 		case MOD_BFG_SPLASH:
 			if (attacker->client->ps.pm_type == PM_DEAD 
 					&& attacker->client->pers.lastKilledBy >= 0 && attacker->client->pers.lastKilledBy < MAX_CLIENTS
 					&& attacker->client->pers.lastKilledBy != attacker->s.number
 					&& attacker->client->pers.lastKilledBy == victim->s.number) {
-				AwardMessage(attacker, EAWARD_DEADHAND, ++(attacker->client->pers.awardCounts[EAWARD_DEADHAND]));
+				// AwardMessage(attacker, EAWARD_DEADHAND, ++(attacker->client->pers.awardCounts[EAWARD_DEADHAND]));
 			}
 			if (!inflictor || !inflictor->missileTeleported) {
 				break;
 			}
-			AwardMessage(attacker, EAWARD_TELEMISSILE_FRAG, ++(attacker->client->pers.awardCounts[EAWARD_TELEMISSILE_FRAG]));
+			// AwardMessage(attacker, EAWARD_TELEMISSILE_FRAG, ++(attacker->client->pers.awardCounts[EAWARD_TELEMISSILE_FRAG]));
 			break;
 	}
 
@@ -878,7 +891,7 @@ void G_CheckDeathEAwards(gentity_t *victim, gentity_t *inflictor, gentity_t *att
 			&& !attacker->client->pers.gotRevenge
 			) {
 		attacker->client->pers.gotRevenge = qtrue;
-		AwardMessage(attacker, EAWARD_REVENGE, ++(attacker->client->pers.awardCounts[EAWARD_REVENGE]));
+		// AwardMessage(attacker, EAWARD_REVENGE, ++(attacker->client->pers.awardCounts[EAWARD_REVENGE]));
 
 	}
 
@@ -892,7 +905,7 @@ void G_CheckDeathEAwards(gentity_t *victim, gentity_t *inflictor, gentity_t *att
 	}
 
 }
-
+*/
 void G_CheckOnePlayerLeft( gentity_t *justdied ) {
 	int teamCount = 0;
 	if (level.roundNumber != level.roundNumberStarted) {
@@ -982,7 +995,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 	}
 
 	// needs to be checked before we untimeshift the victim
-    	G_CheckAmbushAward(self, inflictor, attacker, meansOfDeath);
+    	//G_CheckAmbushAward(self, inflictor, attacker, meansOfDeath);
 
 //unlagged - backward reconciliation #2
 	// make sure the body shows up in the client's current position
@@ -999,10 +1012,11 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 	CheckAlmostCapture( self, attacker );
 	// check for a player that almost brought in cubes
 	CheckAlmostScored( self, attacker );
-
+	/*
 	if (self->client && self->client->hook) {
 		Weapon_HookFree(self->client->hook);
 	}
+	*/
 	if ((self->client->ps.eFlags & EF_TICKING) && self->activator) {
 		self->client->ps.eFlags &= ~EF_TICKING;
 		self->activator->think = G_FreeEntity;
@@ -1070,14 +1084,15 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 	self->client->pers.lastKilledBy = killer;
 	self->client->pers.gotRevenge = qfalse;
     
-	G_CheckStrongmanAward(attacker, self);
-    	G_CheckDeathEAwards(self, inflictor, attacker, meansOfDeath);
+	//G_CheckStrongmanAward(attacker, self);
+    	//G_CheckDeathEAwards(self, inflictor, attacker, meansOfDeath);
 
 	if (attacker && attacker->client) {
 		attacker->client->lastkilled_client = self->s.number;
 
 		if ( attacker == self || OnSameTeam (self, attacker ) ) {
-			if(g_gametype.integer != GT_TREASURE_HUNTER && g_gametype.integer!=GT_LMS && !(G_IsElimTeamGT() && level.time < level.roundStartTime))
+			// if(g_gametype.integer != GT_TREASURE_HUNTER && g_gametype.integer!=GT_LMS && !(G_IsElimTeamGT() && level.time < level.roundStartTime))
+			if(g_gametype.integer!=GT_LMS && !(G_IsElimTeamGT() && level.time < level.roundStartTime))
                                 AddScore( attacker, self->r.currentOrigin, -1 );
 		} else {
 			if( meansOfDeath == MOD_GAUNTLET ) {
@@ -1097,18 +1112,20 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 
 				// also play humiliation on target
 				self->client->ps.persistant[PERS_PLAYEREVENTS] ^= PLAYEREVENT_GAUNTLETREWARD;
-
+				/*
 				if (attacker->client->ps.powerups[PW_INVIS]) {
 					AwardMessage(attacker, EAWARD_AMBUSH, ++(attacker->client->pers.awardCounts[EAWARD_AMBUSH]));
 				}
 				if ((++(attacker->client->gauntSpree)) % 3 == 0 ) {
 					AwardMessage(attacker, EAWARD_BERSERKER, ++(attacker->client->pers.awardCounts[EAWARD_BERSERKER]));
 				}
+				*/
 			} else {
 				attacker->client->gauntSpree = 0;
 			}
 
-			if(g_gametype.integer!=GT_LMS && g_gametype.integer != GT_TREASURE_HUNTER) {
+			//if(g_gametype.integer!=GT_LMS && g_gametype.integer != GT_TREASURE_HUNTER) {
+			if(g_gametype.integer!=GT_LMS) {
 				AddScore( attacker, self->r.currentOrigin, 1 );
 			}
 
@@ -1152,6 +1169,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
                                 case MOD_BFG_SPLASH:
                                     ChallengeMessage(attacker,WEAPON_BFG_KILLS);
                                     break;
+				/*
                                 case MOD_NAIL:
                                     ChallengeMessage(attacker,WEAPON_NAILGUN_KILLS);
                                     break;
@@ -1164,6 +1182,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
                                 case MOD_GRAPPLE:
                                     ChallengeMessage(attacker,WEAPON_GRAPPLE_KILLS);
                                     break;
+				*/
                                 case MOD_LAVA:
                                 case MOD_SLIME:
                                 case MOD_TRIGGER_HURT:
@@ -1263,7 +1282,8 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 			attacker->client->lastKillTime = level.time;
 		}
 	} else {
-		if(g_gametype.integer != GT_TREASURE_HUNTER && g_gametype.integer!=GT_LMS && !(G_IsElimTeamGT() && level.time < level.roundStartTime))
+		//if(g_gametype.integer != GT_TREASURE_HUNTER && g_gametype.integer!=GT_LMS && !(G_IsElimTeamGT() && level.time < level.roundStartTime))
+		if(g_gametype.integer!=GT_LMS && !(G_IsElimTeamGT() && level.time < level.roundStartTime))
                     //if(self->client->ps.persistant[PERS_SCORE]>0 || level.numNonSpectatorClients<3) //Cannot get negative scores by suicide
 			AddScore( self, self->r.currentOrigin, -1 );
 	}
@@ -1287,9 +1307,11 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 		}
 	}
         TossClientPersistantPowerups( self );
+	/*
         if( g_gametype.integer == GT_HARVESTER ) {
                 TossClientCubes( self );
         }
+	*/
 	// if client is in a nodrop area, don't drop anything (but return CTF flags!)
 	TossClientItems( self );
 //#endif
@@ -1326,7 +1348,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 				&& meansOfDeath != MOD_WATER
 				&& meansOfDeath != MOD_TARGET_LASER
 				&& meansOfDeath != MOD_TELEFRAG
-				&& meansOfDeath != MOD_JUICED
+				//&& meansOfDeath != MOD_JUICED
 		   ) {
 			self->client->frozen = FROZEN_ONMAP;
 			G_CreateFrozenPlayer(self);
@@ -1416,10 +1438,11 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 
 			// globally cycle through the different death animations
 			i = ( i + 1 ) % 3;
-
+			/*
 			if (self->s.eFlags & EF_KAMIKAZE) {
 				Kamikaze_DeathTimer( self );
 			}
+			*/
 		}
 		trap_LinkEntity (self);
 	} else {
@@ -1540,6 +1563,7 @@ int RaySphereIntersections( vec3_t origin, float radius, vec3_t point, vec3_t di
 G_InvulnerabilityEffect
 ================
 */
+/*
 int G_InvulnerabilityEffect( gentity_t *targ, vec3_t dir, vec3_t point, vec3_t impactpoint, vec3_t bouncedir ) {
 	gentity_t	*impact;
 	vec3_t		intersections[2], vec;
@@ -1572,6 +1596,7 @@ int G_InvulnerabilityEffect( gentity_t *targ, vec3_t dir, vec3_t point, vec3_t i
 		return qfalse;
 	}
 }
+*/
 
 /*
 catchup_damage
@@ -1609,7 +1634,9 @@ qboolean G_TreasureHuntDamage( gentity_t *targ, gentity_t *attacker, int mod ) {
 				&& level.th_phase == TH_HIDE
 				&& targ->parent == attacker
 				&& (mod == MOD_MACHINEGUN || mod == MOD_SHOTGUN || mod == MOD_GAUNTLET 
-						|| mod == MOD_RAILGUN || mod == MOD_LIGHTNING || mod == MOD_CHAINGUN)) {
+						|| mod == MOD_RAILGUN || mod == MOD_LIGHTNING
+						// || mod == MOD_CHAINGUN
+						)) {
 			// players can destroy their own tokens during hiding phase, but only with hitscan weapons
 			return qtrue;
 		} else {
@@ -1618,7 +1645,7 @@ qboolean G_TreasureHuntDamage( gentity_t *targ, gentity_t *attacker, int mod ) {
 	}
 	return qtrue;
 }
-
+/*
 void G_CheckRocketSniper(gentity_t *victim, gentity_t *inflictor, gentity_t *attacker, int meansOfDeath) {
 	if (meansOfDeath != MOD_ROCKET 
 			|| !victim 
@@ -1732,7 +1759,7 @@ void G_CheckComboAwards(gentity_t *victim, gentity_t *attacker, int mod, int las
 	}
 
 }
-
+*/
 void G_StoreViewVectorHistory ( gclient_t *client ) {
 	AngleVectors (client->ps.viewangles, client->viewvector_history[client->viewvector_head], NULL, NULL);
 	client->viewvector_head = (client->viewvector_head + 1) % VIEWVECTOR_HISTORY;
@@ -1740,7 +1767,7 @@ void G_StoreViewVectorHistory ( gclient_t *client ) {
 		client->viewvector_historysize = VIEWVECTOR_HISTORY;
 	}
 }
-
+/*
 #define TWITCHRAIL_TIME 135
 #define TWITCHRAIL_ANGLE 55.0
 #define TWITCHRAIL_DISTANCE 100.0
@@ -1805,7 +1832,7 @@ void G_CheckImmortality(gentity_t *ent) {
 	ent->client->dmgTakenImmortality -= IMMORTALITY_DAMAGE;
 	AwardMessage(ent, EAWARD_IMMORTALITY, ++(ent->client->pers.awardCounts[EAWARD_IMMORTALITY]));
 }
-
+*/
 static int G_WeaponForMOD(int mod) {
 	switch (mod) {
 		case MOD_GAUNTLET:
@@ -1830,6 +1857,7 @@ static int G_WeaponForMOD(int mod) {
 		case MOD_BFG:
 		case MOD_BFG_SPLASH:
 			return WP_BFG;
+		/*
 		case MOD_GRAPPLE:
 			return WP_GRAPPLING_HOOK;
 		case MOD_NAIL:
@@ -1838,6 +1866,7 @@ static int G_WeaponForMOD(int mod) {
 			return WP_PROX_LAUNCHER;
 		case MOD_CHAINGUN:
 			return WP_CHAINGUN;
+		*/
 	}
 	return WP_NONE;
 }
@@ -1946,12 +1975,13 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 				&& mod != MOD_FALLING && mod != MOD_SUICIDE && mod != MOD_TELEFRAG && mod != MOD_SUICIDE) {
 			return;
 		}
-	} else if (g_gametype.integer == GT_TREASURE_HUNTER) {
+	}
+	/*
+	else if (g_gametype.integer == GT_TREASURE_HUNTER) {
 		if (!G_TreasureHuntDamage(targ, attacker, mod)) {
 			return;
 		}
 	}
-
 	if ( targ->client && mod != MOD_JUICED) {
 		if ( targ->client->invulnerabilityTime > level.time) {
 			if ( dir && point ) {
@@ -1960,6 +1990,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 			return;
 		}
 	}
+	*/
         //Sago: This was moved up
         client = targ->client;
 
@@ -1996,16 +2027,20 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		}
 		return;
 	}
+	/*
 	if( g_gametype.integer == GT_OBELISK && CheckObeliskAttack( targ, attacker ) ) {
 		return;
 	}
+	*/
 	// reduce damage by the attacker's handicap value
 	// unless they are rocket jumping
 	if ( attacker->client && attacker != targ ) {
 		max = attacker->client->ps.stats[STAT_MAX_HEALTH];
+		/*
 		if( bg_itemlist[attacker->client->ps.stats[STAT_PERSISTANT_POWERUP]].giTag == PW_GUARD ) {
 			max /= 2;
 		}
+		*/
 		damage = damage * max / 100;
 	}
 
@@ -2087,7 +2122,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 
 		// if TF_NO_FRIENDLY_FIRE is set, don't do damage to the target
 		// if the attacker was on the same team
-		if ( mod != MOD_JUICED && mod != MOD_CRUSH && targ != attacker && !(dflags & DAMAGE_NO_TEAM_PROTECTION) && OnSameTeam (targ, attacker)  ) {
+		// if ( mod != MOD_JUICED && mod != MOD_CRUSH && targ != attacker && !(dflags & DAMAGE_NO_TEAM_PROTECTION) && OnSameTeam (targ, attacker)  ) {
+		if ( mod != MOD_CRUSH && targ != attacker && !(dflags & DAMAGE_NO_TEAM_PROTECTION) && OnSameTeam (targ, attacker)  ) {
 			if ( !g_friendlyFire.integer ) {
 				return;
 			}
@@ -2099,6 +2135,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 				return;
 			}
 		}
+		/*
 		if (mod == MOD_PROXIMITY_MINE) {
 			if (inflictor && inflictor->parent && OnSameTeam(targ, inflictor->parent)) {
 				return;
@@ -2107,7 +2144,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 				return;
 			}
 		}
-
+		*/
 		// check for godmode
 		if ( targ->flags & FL_GODMODE ) {
 			return;
@@ -2222,7 +2259,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	}
 
 	// See if it's the player hurting the emeny flag carrier
-	if( g_gametype.integer == GT_CTF || g_gametype.integer == GT_1FCTF || g_gametype.integer == GT_CTF_ELIMINATION) {
+	// if( g_gametype.integer == GT_CTF || g_gametype.integer == GT_1FCTF || g_gametype.integer == GT_CTF_ELIMINATION) {
+	if( g_gametype.integer == GT_CTF || g_gametype.integer == GT_CTF_ELIMINATION) {
 		Team_CheckHurtCarrier(targ, attacker);
 	}
 
@@ -2270,10 +2308,10 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 			targ->client->ps.stats[STAT_HEALTH] = targ->health;
 		}
 
-		G_CheckRocketSniper(targ, inflictor, attacker, mod);
-		G_CheckAirrocket(targ, inflictor, attacker, mod);
-		G_CheckRailtwo(targ, attacker, mod, lastDmgGivenTime, lastDmgGivenMOD, lastDmgGivenEntityNum);
-		G_CheckTwitchRail(attacker, targ, mod);
+		//G_CheckRocketSniper(targ, inflictor, attacker, mod);
+		//G_CheckAirrocket(targ, inflictor, attacker, mod);
+		//G_CheckRailtwo(targ, attacker, mod, lastDmgGivenTime, lastDmgGivenMOD, lastDmgGivenEntityNum);
+		//G_CheckTwitchRail(attacker, targ, mod);
 
 		// stats
 		if (targ->health < 0) {
@@ -2322,7 +2360,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		///
 			
 		if ( targ->health <= 0 ) {
-			G_CheckComboAwards(targ, attacker, mod, lastDmgGivenEntityNum, lastDmgGivenTime, lastDmgGivenMOD);
+			//G_CheckComboAwards(targ, attacker, mod, lastDmgGivenEntityNum, lastDmgGivenTime, lastDmgGivenMOD);
 			if ( client )
 				targ->flags |= FL_NO_KNOCKBACK;
 
@@ -2338,7 +2376,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 
 		if (targ->client && targ->client->ps.pm_type != PM_DEAD && dmgTaken)  {
 			// player took damage but survived, check for immortality award
-			G_CheckImmortality(targ);
+			//G_CheckImmortality(targ);
 		}
 	}
 

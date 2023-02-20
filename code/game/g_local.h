@@ -490,7 +490,7 @@ typedef struct {
     int	unnamedPlayerRenameTime;
     qboolean forceRename; // set to qtrue while a player is forcefully renamed
 
-    int awardCounts[EAWARD_NUM_AWARDS];
+    // int awardCounts[EAWARD_NUM_AWARDS];
 
     int nextmapVoteFlags;
     int nextmapVote;
@@ -974,7 +974,7 @@ void G_SendSpawnpoints(gentity_t *ent);
 qboolean G_TournamentSpecMuted(void);
 void AccMessage( gentity_t *ent );
 void DuelStatsMessageForPlayers(gentity_t *p1, gentity_t *p2);
-void AwardMessage(gentity_t *ent, extAward_t award, int count);
+//void AwardMessage(gentity_t *ent, extAward_t award, int count);
 qboolean SendNextmapVoteCommand( void );
 int G_GametypeBitsCurrent( void );
 void G_UnmuteClientNum(int clientNum);
@@ -1243,7 +1243,7 @@ gclient_t	*ClientForString( const char *s );
 // g_weapon.c
 //
 void FireWeapon( gentity_t *ent );
-void G_StartKamikaze( gentity_t *ent );
+//void G_StartKamikaze( gentity_t *ent );
 
 //
 // p_hud.c
